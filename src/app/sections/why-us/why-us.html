@@ -1,0 +1,35 @@
+<section class="why" id="why">
+    <div class="container">
+  
+      <div class="why__header">
+        <span class="why__badge">{{ 'why.badge' | transloco }}</span>
+        <h2 class="why__title">{{ 'why.title' | transloco }}</h2>
+        <p class="why__subtitle">{{ 'why.subtitle' | transloco }}</p>
+      </div>
+  
+      <div class="why__bento">
+  
+       <!-- Large Stat Card -->
+       <article class="bento bento--stat" appReveal>
+        <img class="bento__bg" src="/screenshots/screen-3.png" alt="" />
+        <div class="bento__overlay"></div>
+      
+        <div class="bento__stat-value">{{ 'why.stat.value' | transloco }}</div>
+        <div class="bento__stat-label">{{ 'why.stat.label' | transloco }}</div>
+      </article>
+  
+        <!-- Features -->
+        @for (feature of features; track feature.key; let i = $index) {
+          <article class="bento bento--feature" appReveal [appRevealDelay]="150 + i * 80">
+            <div class="bento__icon">
+              <svg [lucideIcon]="feature.icon" [size]="22" [strokeWidth]="1.8"></svg>
+            </div>
+            <h3 class="bento__title">{{ 'why.items.' + feature.key + '.title' | transloco }}</h3>
+            <p class="bento__desc">{{ 'why.items.' + feature.key + '.desc' | transloco }}</p>
+          </article>
+        }
+  
+      </div>
+  
+    </div>
+  </section>

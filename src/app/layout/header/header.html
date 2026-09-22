@@ -1,0 +1,56 @@
+<header class="header">
+    <div class="container header__inner">
+  
+      <!-- Logo -->
+      <a class="header__logo" href="#">
+        <img src="logo.png" alt="Vertex ERP" />
+      </a>
+  
+      <!-- Desktop Nav -->
+      <nav class="header__nav">
+        <a href="#home">{{ 'nav.home' | transloco }}</a>
+        <a href="#modules">{{ 'nav.modules' | transloco }}</a>
+        <a href="#why">{{ 'nav.why' | transloco }}</a>
+        <a href="#process">{{ 'nav.process' | transloco }}</a>
+        <a href="#faq">{{ 'nav.faq' | transloco }}</a>
+        <a href="#contact">{{ 'nav.contact' | transloco }}</a>
+      </nav>
+  
+      <!-- Actions -->
+      <div class="header__actions">
+  
+        <!-- Language Switch -->
+        <div class="lang-switch">
+          <button
+            [class.active]="currentLang() === 'ar'"
+            (click)="switchLang('ar')">AR</button>
+          <span>/</span>
+          <button
+            [class.active]="currentLang() === 'en'"
+            (click)="switchLang('en')">EN</button>
+        </div>
+  
+        <!-- CTA -->
+        <a class="btn btn--primary" href="#demo">
+          {{ 'nav.requestDemo' | transloco }}
+        </a>
+  
+        <!-- Mobile Toggle -->
+        <button class="menu-toggle" (click)="toggleMenu()" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  
+    <!-- Mobile Nav -->
+    @if (menuOpen()) {
+      <nav class="header__mobile">
+        <a href="#home" (click)="toggleMenu()">{{ 'nav.home' | transloco }}</a>
+        <a href="#modules" (click)="toggleMenu()">{{ 'nav.modules' | transloco }}</a>
+        <a href="#why" (click)="toggleMenu()">{{ 'nav.why' | transloco }}</a>
+        <a href="#process" (click)="toggleMenu()">{{ 'nav.process' | transloco }}</a>
+        <a href="#faq" (click)="toggleMenu()">{{ 'nav.faq' | transloco }}</a>
+        <a href="#contact" (click)="toggleMenu()">{{ 'nav.contact' | transloco }}</a>
+      </nav>
+    }
+  </header>

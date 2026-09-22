@@ -1,0 +1,131 @@
+.cta {
+    padding: 40px 0 90px;
+    background: var(--color-surface);
+  
+    &__box {
+      position: relative;
+      padding: 70px 40px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, #2A4F7A 100%);
+      overflow: hidden;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(30, 58, 95, 0.25);
+    }
+  
+    &__glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(70px);
+      pointer-events: none;
+  
+      &--1 {
+        width: 320px;
+        height: 320px;
+        top: -120px;
+        inset-inline-start: -80px;
+        background: rgba(59, 130, 246, 0.45);
+      }
+  
+      &--2 {
+        width: 260px;
+        height: 260px;
+        bottom: -100px;
+        inset-inline-end: -60px;
+        background: rgba(147, 197, 253, 0.3);
+      }
+    }
+  
+    &__content {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+  
+    &__title {
+      font-size: 38px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+  
+    &__subtitle {
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+  
+    &__actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+  }
+  
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.25s ease;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+  
+    &--light {
+      background: #fff;
+      color: var(--color-primary);
+  
+      &:hover {
+        background: #F1F5F9;
+        color: var(--color-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+      }
+    }
+  
+    &--outline {
+      background: transparent;
+      color: #fff;
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+  
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #fff;
+        color: #fff;
+      }
+    }
+  }
+  
+  /* Responsive */
+  @media (max-width: 900px) {
+    .cta {
+      padding: 20px 0 60px;
+  
+      &__box {
+        padding: 50px 24px;
+        border-radius: 20px;
+      }
+  
+      &__title {
+        font-size: 26px;
+      }
+  
+      &__subtitle {
+        font-size: 15px;
+        margin-bottom: 26px;
+      }
+    }
+  
+    .btn {
+      padding: 12px 22px;
+      font-size: 14px;
+    }
+  }

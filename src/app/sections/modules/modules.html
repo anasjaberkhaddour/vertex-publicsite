@@ -1,0 +1,27 @@
+<section class="modules" id="modules">
+    <div class="container">
+  
+      <div class="modules__header">
+        <span class="modules__badge">{{ 'modules.badge' | transloco }}</span>
+        <h2 class="modules__title">{{ 'modules.title' | transloco }}</h2>
+        <p class="modules__subtitle">{{ 'modules.subtitle' | transloco }}</p>
+      </div>
+  
+      <div class="modules__grid">
+        @for (mod of modules; track mod.key; let i = $index) {
+          <article class="module-card" appReveal [appRevealDelay]="i * 60">
+            <div class="module-card__icon">
+              <svg [lucideIcon]="mod.icon" [size]="24" [strokeWidth]="1.8"></svg>
+            </div>
+            <h3 class="module-card__title">
+              {{ 'modules.items.' + mod.key + '.title' | transloco }}
+            </h3>
+            <p class="module-card__desc">
+              {{ 'modules.items.' + mod.key + '.desc' | transloco }}
+            </p>
+          </article>
+        }
+      </div>
+  
+    </div>
+  </section>

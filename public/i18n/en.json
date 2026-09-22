@@ -1,0 +1,158 @@
+{
+    "nav": {
+        "home": "Home",
+        "modules": "Modules",
+        "faq": "FAQ",
+        "why": "Why Us",
+        "process": "How We Work",
+        "contact": "Contact",
+        "requestDemo": "Request Demo"
+      },
+    "hero": {
+      "badge": "Integrated ERP Suite",
+      "title": "Manage Your Entire Enterprise From One Place",
+      "subtitle": "Vertex ERP unifies HR, Finance, Production, Inventory, and Performance into one integrated, customizable system.",
+      "ctaPrimary": "Request a Demo",
+      "ctaSecondary": "Explore Modules"
+    },
+    "modules": {
+      "badge": "Modules",
+      "title": "A Complete Suite for Every Need",
+      "subtitle": "More than 15 interconnected apps working in perfect harmony to cover all your enterprise operations.",
+      "items": {
+        "hr": { "title": "Human Resources", "desc": "Comprehensive employee data and org structure management." },
+        "recruitment": { "title": "Recruitment", "desc": "Full hiring cycle from posting to onboarding." },
+        "attendance": { "title": "Attendance", "desc": "Accurate check-in/out and leave tracking." },
+        "payroll": { "title": "Payroll", "desc": "Automated salary, allowance, and deduction processing." },
+        "finance": { "title": "Finance", "desc": "Full financial operations and invoicing." },
+        "costing": { "title": "Cost Accounting", "desc": "Precise analysis of production and service costs." },
+        "production": { "title": "Production Lines", "desc": "Monitor production lines and capacity." },
+        "inventory": { "title": "Inventory", "desc": "Warehouse, movement, and stocktaking management." },
+        "garage": { "title": "Garage", "desc": "Vehicle, maintenance, and fuel management." },
+        "performance": { "title": "Performance & KPIs", "desc": "Performance evaluation and KPI tracking." },
+        "messaging": { "title": "Messaging", "desc": "Secure and efficient internal messaging." },
+        "employeeFile": { "title": "E-Employee File", "desc": "A complete digital file for every employee." },
+        "mobileApp": { "title": "Mobile App", "desc": "Employee file app on iOS and Android." },
+        "entities": { "title": "Entities Management", "desc": "Manage customers, suppliers, and entities." },
+        "auditLog": { "title": "Audit Log & Tracing", "desc": "Log and trace every operation in the system." },
+        "users": { "title": "Users & Permissions", "desc": "Fine-grained access control per user." }
+      }
+    },
+    "screenshots": {
+        "badge": "Visual Tour",
+        "title": "Explore the Suite Interfaces",
+        "subtitle": "Modern design and smooth UX across all modules.",
+        "slides": {
+          "s1": { "title": "Dashboard", "desc": "A comprehensive view of key performance indicators." },
+          "s2": { "title": "Human Resources", "desc": "Complete employee data management." },
+          "s3": { "title": "Finance", "desc": "Accurate and real-time financial reports." },
+          "s4": { "title": "Inventory", "desc": "Precise tracking of warehouses and movements." },
+          "s5": { "title": "Performance & KPIs", "desc": "Measure and improve team performance." }
+        }
+      },
+      "why": {
+        "badge": "Why Vertex ERP",
+        "title": "A Suite Built to Grow With Your Enterprise",
+        "subtitle": "Features that make a real difference in your daily operations.",
+        "stat": {
+          "value": "15+",
+          "label": "interconnected modules in one suite"
+        },
+        "items": {
+          "integration": { "title": "Full Integration", "desc": "All modules connected—data flows seamlessly with no duplicate entry." },
+          "customization": { "title": "Customization & Growth", "desc": "The suite adapts to your needs and grows module by module." },
+          "security": { "title": "Security & Fine Permissions", "desc": "Full control per user, with an audit log for every action." },
+          "support": { "title": "Support & Training", "desc": "A close support team and hands-on training for every module." },
+          "arabic": { "title": "Full Arabic Support", "desc": "Authentic Arabic UI with proper RTL design—not just translation." },
+          "performance": { "title": "Speed & Power", "desc": "High performance even with large data and concurrent operations." }
+        }
+      },
+      "process": {
+        "badge": "How We Work",
+        "title": "Your Journey in Four Steps",
+        "subtitle": "A clear methodology ensuring a smooth launch from day one.",
+        "steps": {
+          "s1": { "title": "Analysis & Consultation", "desc": "We listen to your needs and analyze your operations to propose the best fit." },
+          "s2": { "title": "Customization & Setup", "desc": "We configure the suite to match your organization and team roles." },
+          "s3": { "title": "Training & Go-Live", "desc": "We train your team hands-on and launch the suite with you, step by step." },
+          "s4": { "title": "Support & Evolution", "desc": "We stay with you and evolve the suite as your needs grow." }
+        }
+      },
+      "faq": {
+        "badge": "FAQ",
+        "title": "Questions Our Clients Ask",
+        "subtitle": "Direct answers to what matters most before you start.",
+        "tabs": {
+          "general": "General",
+          "technical": "Technical"
+        },
+        "items": {
+          "q1": { "q": "What makes Vertex ERP different?", "a": "An integrated suite of 15+ interconnected modules, authentic Arabic design, high performance, and scalability that grows with your organization." },
+          "q2": { "q": "Can the suite be customized to our organization?", "a": "Yes. We fully configure the suite to match your business, org structure, team roles, and terminology." },
+          "q3": { "q": "How long does implementation take?", "a": "It depends on the size and number of modules. We start with a pilot rollout, then expand as your team is ready." },
+          "q4": { "q": "Does it fully support Arabic?", "a": "Yes. Authentic Arabic UI with proper RTL design—not just translation—plus full support for Arabic reports and documents." },
+          "q5": { "q": "Can it integrate with other systems?", "a": "Yes. The suite integrates with external systems via secure, documented APIs." },
+          "q6": { "q": "How are support and training handled?", "a": "We provide hands-on training at go-live, ongoing support through multiple channels, and periodic updates." }
+        }
+      },
+      "cta": {
+        "title": "Ready to Transform Your Enterprise?",
+        "subtitle": "Get a free demo and discover how Vertex ERP fits your business.",
+        "primary": "Request a Demo",
+        "secondary": "Contact Us"
+      },
+      "footer": {
+        "tagline": "An integrated ERP suite to manage your enterprise efficiently.",
+        "quickLinks": "Quick Links",
+        "modulesTitle": "Top Modules",
+        "contactTitle": "Contact Us",
+        "links": {
+          "home": "Home",
+          "about": "About",
+          "modules": "Modules",
+          "why": "Why Us",
+          "contact": "Contact"
+        },
+        "modulesList": {
+          "hr": "Human Resources",
+          "payroll": "Payroll",
+          "finance": "Finance",
+          "inventory": "Inventory",
+          "production": "Production Lines"
+        },
+        "contact": {
+          "email": "info@vertex-erp.com",
+          "phone": "+963 000 000 000",
+          "address": "Damascus, Syria"
+        },
+        "rights": "All rights reserved",
+        "company": "Vertex ERP"
+      },
+      "contact": {
+        "badge": "Contact Us",
+        "title": "Let's Talk About Your Needs",
+        "subtitle": "Fill the form and we'll get back to you within one business day.",
+        "form": {
+          "name": "Full Name",
+          "namePh": "Enter your name",
+          "email": "Email",
+          "emailPh": "example@company.com",
+          "phone": "Phone",
+          "phonePh": "+963 000 000 000",
+          "company": "Company (optional)",
+          "companyPh": "Your company name",
+          "message": "Your Message",
+          "messagePh": "Tell us about your needs...",
+          "submit": "Send Message",
+          "success": "Your message has been sent successfully. We'll get back to you soon."
+        },
+        "info": {
+          "title": "Contact Information",
+          "emailLabel": "Email",
+          "phoneLabel": "Phone",
+          "addressLabel": "Address",
+          "hoursLabel": "Working Hours",
+          "hours": "Sun - Thu, 9:00 - 17:00"
+        }
+      }
+  }

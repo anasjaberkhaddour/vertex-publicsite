@@ -1,0 +1,46 @@
+<section class="screenshots" id="screenshots">
+    <div class="container">
+  
+      <div class="screenshots__header">
+        <span class="screenshots__badge">{{ 'screenshots.badge' | transloco }}</span>
+        <h2 class="screenshots__title">{{ 'screenshots.title' | transloco }}</h2>
+        <p class="screenshots__subtitle">{{ 'screenshots.subtitle' | transloco }}</p>
+      </div>
+  
+      <div class="screenshots__carousel">
+        <swiper-container
+        #swiperRef
+        [attr.dir]="transloco.getActiveLang() === 'ar' ? 'rtl' : 'ltr'"
+        slides-per-view="1"
+        space-between="0"
+        centered-slides="true"
+        loop="true"
+        navigation="true"
+        pagination="true"
+        pagination-clickable="true"
+        watch-slides-progress="true"
+        observer="true"
+        observe-parents="true"
+        [breakpoints]="{
+            '768': { slidesPerView: 1.2, spaceBetween: 24 },
+            '1024': { slidesPerView: 1.5, spaceBetween: 32 }
+        }"
+        >
+        @for (slide of slides; track slide.key) {
+            <swiper-slide>
+            <figure class="shot">
+                <div class="shot__frame">
+                <img [src]="slide.image" [alt]="'screenshots.slides.' + slide.key + '.title' | transloco" />
+                </div>
+                <figcaption class="shot__caption">
+                <h3>{{ 'screenshots.slides.' + slide.key + '.title' | transloco }}</h3>
+                <p>{{ 'screenshots.slides.' + slide.key + '.desc' | transloco }}</p>
+                </figcaption>
+            </figure>
+            </swiper-slide>
+        }
+        </swiper-container>
+      </div>
+  
+    </div>
+  </section>

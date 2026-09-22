@@ -1,0 +1,40 @@
+<section class="faq" id="faq">
+    <div class="container">
+  
+      <div class="faq__header">
+        <span class="faq__badge">{{ 'faq.badge' | transloco }}</span>
+        <h2 class="faq__title">{{ 'faq.title' | transloco }}</h2>
+        <p class="faq__subtitle">{{ 'faq.subtitle' | transloco }}</p>
+      </div>
+  
+      <!-- Tabs -->
+      <div class="faq__tabs">
+        @for (tab of tabs; track tab.key) {
+          <button
+            class="faq-tab"
+            [class.is-active]="activeTab() === tab.key"
+            (click)="switchTab(tab.key)">
+            {{ tab.label | transloco }}
+          </button>
+        }
+      </div>
+  
+      <!-- List -->
+      <div class="faq__list">
+        @for (item of items(); track item.key; let i = $index) {
+          <article class="faq-item" [class.is-open]="openIndex() === i" appReveal [appRevealDelay]="i * 100">
+            <button class="faq-item__trigger" (click)="toggle(i)" [attr.aria-expanded]="openIndex() === i">
+              <span class="faq-item__question">{{ 'faq.items.' + item.key + '.q' | transloco }}</span>
+              <span class="faq-item__icon">
+                <svg [lucideIcon]="plusIcon" [size]="18" [strokeWidth]="2"></svg>
+              </span>
+            </button>
+            <div class="faq-item__panel">
+              <p class="faq-item__answer">{{ 'faq.items.' + item.key + '.a' | transloco }}</p>
+            </div>
+          </article>
+        }
+      </div>
+  
+    </div>
+  </section>

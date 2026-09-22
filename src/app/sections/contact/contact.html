@@ -1,0 +1,126 @@
+<section class="contact" id="contact">
+    <div class="container">
+  
+      <div class="contact__header">
+        <span class="contact__badge">{{ 'contact.badge' | transloco }}</span>
+        <h2 class="contact__title">{{ 'contact.title' | transloco }}</h2>
+        <p class="contact__subtitle">{{ 'contact.subtitle' | transloco }}</p>
+      </div>
+  
+      <div class="contact__grid">
+  
+        <!-- Form -->
+        <div class="contact__form-wrap">
+          @if (!submitted()) {
+            <form class="contact-form" (ngSubmit)="onSubmit($event)">
+              <div class="contact-form__row">
+                <div class="form-field">
+                  <label>{{ 'contact.form.name' | transloco }}</label>
+                  <input
+                    type="text"
+                    [(ngModel)]="form.name"
+                    name="name"
+                    [placeholder]="'contact.form.namePh' | transloco"
+                    required />
+                </div>
+                <div class="form-field">
+                  <label>{{ 'contact.form.email' | transloco }}</label>
+                  <input
+                    type="email"
+                    [(ngModel)]="form.email"
+                    name="email"
+                    [placeholder]="'contact.form.emailPh' | transloco"
+                    required />
+                </div>
+              </div>
+  
+              <div class="contact-form__row">
+                <div class="form-field">
+                  <label>{{ 'contact.form.phone' | transloco }}</label>
+                  <input
+                    type="tel"
+                    [(ngModel)]="form.phone"
+                    name="phone"
+                    [placeholder]="'contact.form.phonePh' | transloco" />
+                </div>
+                <div class="form-field">
+                  <label>{{ 'contact.form.company' | transloco }}</label>
+                  <input
+                    type="text"
+                    [(ngModel)]="form.company"
+                    name="company"
+                    [placeholder]="'contact.form.companyPh' | transloco" />
+                </div>
+              </div>
+  
+              <div class="form-field">
+                <label>{{ 'contact.form.message' | transloco }}</label>
+                <textarea
+                  rows="5"
+                  [(ngModel)]="form.message"
+                  name="message"
+                  [placeholder]="'contact.form.messagePh' | transloco"
+                  required></textarea>
+              </div>
+  
+              <button type="submit" class="btn btn--primary btn--lg">
+                <span>{{ 'contact.form.submit' | transloco }}</span>
+                <svg [lucideIcon]="sendIcon" [size]="18" [strokeWidth]="2"></svg>
+              </button>
+            </form>
+          } @else {
+            <div class="contact__success">
+              <div class="contact__success-icon">✓</div>
+              <p>{{ 'contact.form.success' | transloco }}</p>
+            </div>
+          }
+        </div>
+  
+        <!-- Info Side -->
+        <aside class="contact__info">
+          <h3 class="contact__info-title">{{ 'contact.info.title' | transloco }}</h3>
+  
+          <ul class="contact__info-list">
+            <li>
+              <span class="contact__info-icon">
+                <svg [lucideIcon]="mailIcon" [size]="18" [strokeWidth]="1.8"></svg>
+              </span>
+              <div>
+                <span class="contact__info-label">{{ 'contact.info.emailLabel' | transloco }}</span>
+                <a href="mailto:info@vertex-erp.com">info@vertex-erp.com</a>
+              </div>
+            </li>
+            <li>
+              <span class="contact__info-icon">
+                <svg [lucideIcon]="phoneIcon" [size]="18" [strokeWidth]="1.8"></svg>
+              </span>
+              <div>
+                <span class="contact__info-label">{{ 'contact.info.phoneLabel' | transloco }}</span>
+                <span dir="ltr">+963 000 000 000</span>
+              </div>
+            </li>
+            <li>
+              <span class="contact__info-icon">
+                <svg [lucideIcon]="pinIcon" [size]="18" [strokeWidth]="1.8"></svg>
+              </span>
+              <div>
+                <span class="contact__info-label">{{ 'contact.info.addressLabel' | transloco }}</span>
+                <span>دمشق، سوريا</span>
+              </div>
+            </li>
+            <li>
+              <span class="contact__info-icon">
+                <svg [lucideIcon]="clockIcon" [size]="18" [strokeWidth]="1.8"></svg>
+              </span>
+              <div>
+                <span class="contact__info-label">{{ 'contact.info.hoursLabel' | transloco }}</span>
+                <span>{{ 'contact.info.hours' | transloco }}</span>
+              </div>
+            </li>
+          </ul>
+        </aside>
+  
+      </div>
+  
+    </div>
+  </section>

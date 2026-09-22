@@ -1,0 +1,28 @@
+<section class="process" id="process">
+    <div class="container">
+  
+      <div class="process__header">
+        <span class="process__badge">{{ 'process.badge' | transloco }}</span>
+        <h2 class="process__title">{{ 'process.title' | transloco }}</h2>
+        <p class="process__subtitle">{{ 'process.subtitle' | transloco }}</p>
+      </div>
+  
+      <div class="process__timeline">
+        <div class="process__line"></div>
+  
+        @for (step of steps; track step.key; let i = $index) {
+          <div class="step" appReveal [appRevealDelay]="i * 200">
+            <div class="step__marker">
+              <span class="step__num">{{ (i + 1).toString().padStart(2, '0') }}</span>
+              <svg class="step__icon" [lucideIcon]="step.icon" [size]="22" [strokeWidth]="1.8"></svg>
+            </div>
+            <div class="step__content">
+              <h3 class="step__title">{{ 'process.steps.' + step.key + '.title' | transloco }}</h3>
+              <p class="step__desc">{{ 'process.steps.' + step.key + '.desc' | transloco }}</p>
+            </div>
+          </div>
+        }
+      </div>
+  
+    </div>
+  </section>
