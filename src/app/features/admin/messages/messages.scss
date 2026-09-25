@@ -1,0 +1,141 @@
+.messages {
+    &__header {
+      margin-bottom: 24px;
+  
+      h1 {
+        font-size: 24px;
+        color: var(--color-primary);
+        margin: 0 0 4px;
+      }
+  
+      p {
+        font-size: 13.5px;
+        color: var(--color-text-muted);
+        margin: 0;
+  
+        .unread {
+          color: var(--color-accent);
+          font-weight: 600;
+        }
+      }
+    }
+  
+    &__filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+  
+      button {
+        padding: 8px 16px;
+        border: 1.5px solid var(--color-border);
+        background: #fff;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 13.5px;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        transition: all 0.2s;
+  
+        &:hover { border-color: var(--color-accent); }
+  
+        &.active {
+          background: var(--color-primary);
+          color: #fff;
+          border-color: var(--color-primary);
+        }
+      }
+    }
+  
+    &__table-wrap {
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+  }
+  
+  .messages-table {
+    width: 100%;
+    border-collapse: collapse;
+  
+    thead {
+      background: var(--color-bg-secondary);
+      th {
+        padding: 14px 16px;
+        text-align: start;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--color-text-secondary);
+      }
+    }
+  
+    tbody tr {
+      border-top: 1px solid var(--color-border);
+      cursor: pointer;
+      transition: background 0.2s;
+  
+      &:hover { background: #FAFBFC; }
+  
+      &.is-unread {
+        background: rgba(59, 130, 246, 0.04);
+        font-weight: 500;
+      }
+    }
+  
+    td {
+      padding: 14px 16px;
+      font-size: 14px;
+      color: var(--color-text);
+    }
+  }
+  
+  .dot-cell { width: 20px; }
+  
+  .unread-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+  
+  .message-preview {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--color-text-secondary);
+  }
+  
+  .actions {
+    display: flex;
+    gap: 6px;
+  }
+  
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+  
+    &:hover {
+      background: var(--color-bg-secondary);
+      border-color: var(--color-accent);
+    }
+  
+    &--danger:hover {
+      background: rgba(220, 38, 38, 0.1);
+      border-color: var(--color-error);
+    }
+  }
+  
+  .loading,
+  .empty {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--color-text-muted);
+  }

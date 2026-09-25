@@ -1,0 +1,29 @@
+@if (confirm.state(); as s) {
+    <div class="confirm-overlay" (click)="confirm.cancel()">
+      <div class="confirm" (click)="$event.stopPropagation()" [class]="'confirm--' + (s.type ?? 'info')">
+  
+        <div class="confirm__icon">
+          @switch (s.type) {
+            @case ('danger') { ! }
+            @case ('warning') { ⚠ }
+            @default { ? }
+          }
+        </div>
+  
+        <h3 class="confirm__title">{{ s.title }}</h3>
+        <p class="confirm__message">{{ s.message }}</p>
+  
+        <div class="confirm__actions">
+          <button class="btn btn--ghost" (click)="confirm.cancel()">
+            {{ s.cancelText ?? 'إلغاء' }}
+          </button>
+          <button class="btn" [class.btn--danger]="s.type === 'danger'"
+                  [class.btn--primary]="s.type !== 'danger'"
+                  (click)="confirm.accept()">
+            {{ s.confirmText ?? 'تأكيد' }}
+          </button>
+        </div>
+  
+      </div>
+    </div>
+  }

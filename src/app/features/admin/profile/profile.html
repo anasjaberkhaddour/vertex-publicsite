@@ -1,0 +1,100 @@
+<div class="profile">
+    @if (loading()) {
+      <div class="loading">جارٍ التحميل...</div>
+    } @else if (details(); as u) {
+  
+      <header class="profile__header">
+        <div class="profile__avatar">{{ u.fullName.charAt(0) }}</div>
+        <div>
+          <h1>{{ u.fullName }}</h1>
+          <p dir="ltr">{{ u.email }}</p>
+        </div>
+      </header>
+  
+      <div class="profile__grid">
+  
+        <!-- المعلومات -->
+        <section class="card">
+          <h2 class="card__title">معلوماتي</h2>
+  
+          <dl class="info-list">
+            <div>
+              <dt>الاسم الكامل</dt>
+              <dd>{{ u.fullName }}</dd>
+            </div>
+            <div>
+              <dt>البريد</dt>
+              <dd dir="ltr">{{ u.email }}</dd>
+            </div>
+            <div>
+              <dt>الحالة</dt>
+              <dd>
+                <span class="status" [class.status--active]="u.isActive">
+                  {{ u.isActive ? 'نشط' : 'معطّل' }}
+                </span>
+              </dd>
+            </div>
+            <div>
+              <dt>تاريخ الإنشاء</dt>
+              <dd>{{ u.createdAt | date:'yyyy-MM-dd' }}</dd>
+            </div>
+          </dl>
+        </section>
+  
+        <!-- الأدوار والصلاحيات -->
+        <section class="card">
+          <h2 class="card__title">الأدوار والصلاحيات</h2>
+  
+          <div class="tags">
+            <span class="label">الأدوار:</span>
+            @for (r of u.roles; track r) {
+              <span class="badge badge--primary">{{ r }}</span>
+            }
+          </div>
+  
+          <div class="tags" style="margin-top: 14px;">
+            <span class="label">الصلاحيات:</span>
+            @for (p of u.permissions; track p) {
+              <span class="badge">{{ p }}</span>
+            }
+          </div>
+        </section>
+  
+        <!-- تغيير كلمة المرور -->
+        <section class="card card--wide">
+          <h2 class="card__title">تغيير كلمة المرور</h2>
+  
+          <form (ngSubmit)="changePassword($event)" class="pwd-form">
+  
+            <div class="form-field">
+              <label>كلمة المرور الحالية</label>
+              <input type="password" [(ngModel)]="passwordForm.currentPassword"
+                     name="currentPassword" required />
+            </div>
+  
+            <div class="form-field">
+              <label>كلمة المرور الجديدة</label>
+              <input type="password" [(ngModel)]="passwordForm.newPassword"
+                     name="newPassword" required />
+            </div>
+  
+            <div class="form-field">
+              <label>تأكيد كلمة المرور</label>
+              <input type="password" [(ngModel)]="confirmPassword"
+                     name="confirmPassword" required />
+            </div>
+  
+            @if (passwordMismatch()) {
+              <div class="warn">كلمتا المرور غير متطابقتين</div>
+            }
+  
+            <button type="submit" class="btn btn--primary"
+                    [disabled]="savingPassword() || passwordMismatch() || !passwordForm.newPassword">
+              {{ savingPassword() ? 'جارٍ الحفظ...' : 'تغيير كلمة المرور' }}
+            </button>
+          </form>
+        </section>
+  
+      </div>
+    }
+  </div>

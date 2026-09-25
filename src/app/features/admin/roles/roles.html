@@ -1,0 +1,70 @@
+<div class="roles">
+
+    <header class="roles__header">
+      <div>
+        <h1>الأدوار</h1>
+        <p>{{ roles().length }} دور</p>
+      </div>
+  
+      @if (can('roles.manage')) {
+        <button class="btn btn--primary" (click)="openCreateDialog()">
+          + إضافة دور
+        </button>
+      }
+    </header>
+  
+    <div class="roles__table-wrap">
+      @if (loading()) {
+        <div class="loading">جارٍ التحميل...</div>
+      } @else if (roles().length === 0) {
+        <div class="empty">لا توجد أدوار</div>
+      } @else {
+        <table class="roles-table">
+          <thead>
+            <tr>
+              <th>الاسم</th>
+              <th>الوصف</th>
+              <th>المستخدمون</th>
+              <th>الصلاحيات</th>
+              <th>إجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (role of roles(); track role.id) {
+              <tr [class.is-protected]="isProtected(role)">
+                <td>
+                  <strong>{{ role.name }}</strong>
+                  @if (isProtected(role)) {
+                    <span class="lock-badge">🔒 محمي</span>
+                  }
+                </td>
+                <td>{{ role.description || '—' }}</td>
+                <td><span class="count-badge">{{ role.usersCount }}</span></td>
+                <td><span class="count-badge">{{ role.permissionsCount }}</span></td>
+                <td class="actions">
+                  @if (can('roles.manage') && !isProtected(role)) {
+                    <button class="icon-btn" title="تعديل" (click)="openEditDialog(role)">✎</button>
+                    <button class="icon-btn" title="الصلاحيات" (click)="openPermissionsDialog(role)">🛡</button>
+                    <button class="icon-btn icon-btn--danger" title="حذف" (click)="deleteRole(role)">🗑</button>
+                  } @else {
+                    <span class="no-actions">—</span>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+    <app-role-form-dialog
+    [open]="showFormDialog()"
+    [role]="editingRole()"
+    (saved)="onSaved()"
+    (closed)="closeFormDialog()" />
+  
+    <app-role-permissions-dialog
+      [open]="showPermissionsDialog()"
+      [role]="permissionsRole()"
+      (saved)="onSaved()"
+      (closed)="closePermissionsDialog()" />
+  </div>

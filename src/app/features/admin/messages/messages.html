@@ -1,0 +1,71 @@
+<div class="messages">
+
+    <header class="messages__header">
+      <div>
+        <h1>الرسائل</h1>
+        <p>
+          {{ messages().length }} رسالة
+          @if (unreadCount() > 0) {
+            · <span class="unread">{{ unreadCount() }} غير مقروءة</span>
+          }
+        </p>
+      </div>
+    </header>
+  
+    <!-- Filters -->
+    <div class="messages__filters">
+      <button [class.active]="filter() === 'all'" (click)="setFilter('all')">الكل</button>
+      <button [class.active]="filter() === 'unread'" (click)="setFilter('unread')">
+        غير المقروءة ({{ unreadCount() }})
+      </button>
+    </div>
+  
+    <!-- Table -->
+    <div class="messages__table-wrap">
+      @if (loading()) {
+        <div class="loading">جارٍ التحميل...</div>
+      } @else if (filteredMessages().length === 0) {
+        <div class="empty">لا توجد رسائل</div>
+      } @else {
+        <table class="messages-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>الاسم</th>
+              <th>البريد</th>
+              <th>الشركة</th>
+              <th>الرسالة</th>
+              <th>التاريخ</th>
+              <th>إجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (msg of filteredMessages(); track msg.id) {
+              <tr [class.is-unread]="!msg.isRead" (click)="openDetails(msg)">
+                <td class="dot-cell">
+                  @if (!msg.isRead) { <span class="unread-dot"></span> }
+                </td>
+                <td><strong>{{ msg.name }}</strong></td>
+                <td dir="ltr">{{ msg.email }}</td>
+                <td>{{ msg.company || '—' }}</td>
+                <td class="message-preview">{{ msg.message }}</td>
+                <td>{{ msg.createdAt | date:'yyyy-MM-dd HH:mm' }}</td>
+                <td class="actions" (click)="$event.stopPropagation()">
+                  <button class="icon-btn" title="عرض" (click)="openDetails(msg)">👁</button>
+                  @if (can('messages.delete')) {
+                    <button class="icon-btn icon-btn--danger" title="حذف" (click)="deleteMessage(msg)">🗑</button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  
+  </div>
+  
+  <app-message-details-dialog
+    [open]="showDetails()"
+    [message]="selectedMessage()"
+    (closed)="closeDetails()" />

@@ -62,9 +62,13 @@
                   [placeholder]="'contact.form.messagePh' | transloco"
                   required></textarea>
               </div>
-  
-              <button type="submit" class="btn btn--primary btn--lg">
-                <span>{{ 'contact.form.submit' | transloco }}</span>
+              <ngx-turnstile 
+                [siteKey]="siteKey" 
+                theme="light" 
+                (resolved)="captchaToken.set($event)">
+              </ngx-turnstile>
+              <button type="submit" class="btn btn--primary btn--lg" [disabled]="loading()">
+                <span>{{ loading() ? '...' : ('contact.form.submit' | transloco) }}</span>
                 <svg [lucideIcon]="sendIcon" [size]="18" [strokeWidth]="2"></svg>
               </button>
             </form>

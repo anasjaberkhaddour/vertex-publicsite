@@ -1,0 +1,41 @@
+<div class="login">
+    <div class="login__card">
+  
+      <div class="login__header">
+        <img src="logo.png" alt="Vertex ERP" class="login__logo" />
+        <h1 class="login__title">لوحة تحكم Vertex</h1>
+        <p class="login__subtitle">سجّل دخولك للمتابعة</p>
+      </div>
+  
+      @if (error()) {
+        <div class="login__error">{{ error() }}</div>
+      }
+  
+      <form class="login__form" (ngSubmit)="onSubmit($event)">
+        <div class="form-field">
+          <label>البريد الإلكتروني</label>
+          <input
+            type="email"
+            [(ngModel)]="credentials.email"
+            name="email"
+            placeholder="admin@vertex-erp.com"
+            required />
+        </div>
+  
+        <div class="form-field">
+          <label>كلمة المرور</label>
+          <input
+            type="password"
+            [(ngModel)]="credentials.password"
+            name="password"
+            placeholder="••••••••"
+            required />
+        </div>
+  
+        <button type="submit" class="btn" [disabled]="loading()">
+          @if (loading()) { جارٍ الدخول... } @else { تسجيل الدخول }
+        </button>
+      </form>
+  
+    </div>
+  </div>

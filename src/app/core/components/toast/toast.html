@@ -1,0 +1,15 @@
+<div class="toast-container">
+    @for (t of toast.toasts(); track t.id) {
+      <div class="toast toast--{{ t.type }}" (click)="toast.dismiss(t.id)">
+        <span class="toast__icon">
+          @switch (t.type) {
+            @case ('success') { ✓ }
+            @case ('error')   { ✕ }
+            @case ('warning') { ⚠ }
+            @default          { ℹ }
+          }
+        </span>
+        <span class="toast__msg">{{ t.message }}</span>
+      </div>
+    }
+  </div>

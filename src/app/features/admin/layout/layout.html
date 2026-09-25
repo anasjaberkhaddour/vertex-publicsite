@@ -1,0 +1,33 @@
+<div class="admin">
+
+    <aside class="admin__sidebar">
+      <div class="admin__brand">
+        <img src="logo.png" alt="Vertex" />
+      </div>
+  
+      <nav class="admin__nav">
+        <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          الرئيسية
+        </a>
+        <a routerLink="/admin/users" routerLinkActive="active">المستخدمون</a>
+        <a routerLink="/admin/roles" routerLinkActive="active">الأدوار</a>
+        <a routerLink="/admin/messages" routerLinkActive="active">الرسائل</a>
+        <a routerLink="/admin/profile" routerLinkActive="active">ملفي الشخصي</a>
+      </nav>
+  
+      <div class="admin__footer">
+        <div class="admin__user">
+          <a routerLink="/admin/profile" class="admin__user-link">
+            <span>{{ auth.currentUser()?.fullName }}</span>
+            <small>{{ auth.currentUser()?.email }}</small>
+          </a>
+          <button class="admin__logout" (click)="logout()">خروج</button>
+        </div>
+      </div>
+    </aside>
+  
+    <main class="admin__main">
+      <router-outlet />
+    </main>
+  
+  </div>

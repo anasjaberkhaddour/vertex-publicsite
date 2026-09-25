@@ -1,0 +1,49 @@
+@if (open() && message(); as m) {
+    <div class="dialog-overlay" (click)="close()">
+      <div class="dialog" (click)="$event.stopPropagation()">
+  
+        <header class="dialog__header">
+          <h2>رسالة من: {{ m.name }}</h2>
+          <button class="dialog__close" (click)="close()">✕</button>
+        </header>
+  
+        <div class="dialog__body">
+  
+          <div class="info-grid">
+            <div>
+              <span class="label">البريد</span>
+              <a [href]="'mailto:' + m.email" dir="ltr">{{ m.email }}</a>
+            </div>
+            @if (m.phone) {
+              <div>
+                <span class="label">الهاتف</span>
+                <a [href]="'tel:' + m.phone" dir="ltr">{{ m.phone }}</a>
+              </div>
+            }
+            @if (m.company) {
+              <div>
+                <span class="label">الشركة</span>
+                <span>{{ m.company }}</span>
+              </div>
+            }
+            <div>
+              <span class="label">التاريخ</span>
+              <span>{{ m.createdAt | date:'yyyy-MM-dd HH:mm' }}</span>
+            </div>
+          </div>
+  
+          <div class="message-body">
+            <span class="label">الرسالة</span>
+            <p>{{ m.message }}</p>
+          </div>
+  
+        </div>
+  
+        <footer class="dialog__footer">
+          <a [href]="'mailto:' + m.email" class="btn btn--primary">الرد عبر البريد</a>
+          <button class="btn btn--ghost" (click)="close()">إغلاق</button>
+        </footer>
+  
+      </div>
+    </div>
+  }

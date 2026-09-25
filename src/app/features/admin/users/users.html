@@ -1,0 +1,108 @@
+<div class="users">
+
+    <!-- Header -->
+    <header class="users__header">
+      <div>
+        <h1>المستخدمون</h1>
+        <p>{{ totalCount() }} مستخدم</p>
+      </div>
+  
+      @if (can('users.create')) {
+        <button class="btn btn--primary" (click)="openCreateDialog()">
+          + إضافة مستخدم
+        </button>
+      }
+    </header>
+  
+    <!-- Toolbar -->
+    <div class="users__toolbar">
+      <input
+        type="search"
+        placeholder="ابحث بالاسم أو البريد..."
+        [ngModel]="search()"
+        (ngModelChange)="onSearch($event)"
+        class="search-input" />
+    </div>
+    <!-- Table -->
+    <div class="users__table-wrap">
+      @if (loading()) {
+        <div class="loading">جارٍ التحميل...</div>
+      } @else if (users().length === 0) {
+        <div class="empty">لا يوجد مستخدمون</div>
+      } @else {
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>الاسم</th>
+              <th>البريد</th>
+              <th>الأدوار</th>
+              <th>الحالة</th>
+              <th>تاريخ الإنشاء</th>
+              <th>إجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (u of users(); track u.id) {
+              <tr [class.is-disabled]="!u.isActive">
+                <td><strong>{{ u.fullName }}</strong></td>
+                <td dir="ltr">{{ u.email }}</td>
+                <td>
+                  @for (r of u.roles; track r) {
+                    <span class="badge">{{ r }}</span>
+                  }
+                </td>
+                <td>
+                  <span class="status" [class.status--active]="u.isActive" [class.status--inactive]="!u.isActive">
+                    {{ u.isActive ? 'نشط' : 'معطّل' }}
+                  </span>
+                </td>
+                <td>{{ u.createdAt | date:'yyyy-MM-dd' }}</td>
+                <td class="actions">
+                  @if (can('users.edit')) {
+                    <button class="icon-btn" title="تعديل" (click)="openEditDialog(u)">✎</button>
+                    <button class="icon-btn" title="الأدوار" (click)="openRolesDialog(u)">🎭</button>
+                    <button class="icon-btn" title="تغيير كلمة المرور" (click)="openChangePasswordDialog(u)">🔑</button>
+                    <button class="icon-btn" [title]="u.isActive ? 'تعطيل' : 'تفعيل'" (click)="toggleActive(u)">
+                      {{ u.isActive ? '⏸' : '▶' }}
+                    </button>
+                  }
+                  @if (can('users.delete')) {
+                    <button class="icon-btn icon-btn--danger" title="حذف" (click)="deleteUser(u)">🗑</button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  
+    <!-- Pagination -->
+    @if (totalPages() > 1) {
+      <nav class="pagination">
+        <button [disabled]="page() === 1" (click)="goToPage(page() - 1)">السابق</button>
+        @for (p of pages(); track p) {
+          <button [class.active]="p === page()" (click)="goToPage(p)">{{ p }}</button>
+        }
+        <button [disabled]="page() === totalPages()" (click)="goToPage(page() + 1)">التالي</button>
+      </nav>
+    }
+    
+    <app-user-form-dialog
+      [open]="showFormDialog()"
+      [user]="editingUser()"
+      (saved)="onFormSaved()"
+      (closed)="closeFormDialog()" />
+
+    <app-user-roles-dialog
+      [open]="showRolesDialog()"
+      [user]="rolesUser()"
+      (saved)="onRolesSaved()"
+      (closed)="closeRolesDialog()" />
+
+    <app-change-password-dialog
+      [open]="showPasswordDialog()"
+      [user]="passwordUser()"
+      (saved)="onPasswordSaved()"
+      (closed)="closePasswordDialog()" />
+  </div>

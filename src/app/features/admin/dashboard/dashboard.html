@@ -1,0 +1,111 @@
+<div class="dashboard">
+
+  <header class="dashboard__header">
+    <div>
+      <h1>مرحباً، {{ auth.currentUser()?.fullName }}</h1>
+      <p>نظرة سريعة على حالة المنصة</p>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="loading">جارٍ التحميل...</div>
+  } @else if (stats(); as s) {
+
+    <!-- Stat Cards -->
+    <div class="stats-grid">
+
+      <a routerLink="/admin/users" class="stat-card stat-card--blue">
+        <div class="stat-card__icon">👥</div>
+        <div>
+          <div class="stat-card__value">{{ s.totalUsers }}</div>
+          <div class="stat-card__label">المستخدمون</div>
+          <div class="stat-card__sub">{{ s.activeUsers }} نشط</div>
+        </div>
+      </a>
+
+      <a routerLink="/admin/roles" class="stat-card stat-card--purple">
+        <div class="stat-card__icon">🛡</div>
+        <div>
+          <div class="stat-card__value">{{ s.totalRoles }}</div>
+          <div class="stat-card__label">الأدوار</div>
+        </div>
+      </a>
+
+      <a routerLink="/admin/messages" class="stat-card stat-card--orange">
+        <div class="stat-card__icon">✉</div>
+        <div>
+          <div class="stat-card__value">{{ s.totalMessages }}</div>
+          <div class="stat-card__label">الرسائل</div>
+          @if (s.unreadMessages > 0) {
+            <div class="stat-card__sub stat-card__sub--alert">{{ s.unreadMessages }} غير مقروءة</div>
+          }
+        </div>
+      </a>
+
+      <div class="stat-card stat-card--green">
+        <div class="stat-card__icon">👁</div>
+        <div>
+          <div class="stat-card__value">{{ s.totalVisits }}</div>
+          <div class="stat-card__label">إجمالي الزيارات</div>
+          <div class="stat-card__sub">{{ s.visitsToday }} اليوم</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-grid">
+
+      <!-- Visits Chart -->
+      <section class="card">
+        <header class="card__header">
+          <h2>الزيارات آخر 7 أيام</h2>
+          <div class="card__meta">
+            <span>{{ s.visitsThisWeek }} هذا الأسبوع</span>
+            <span>·</span>
+            <span>{{ s.uniqueVisitorsToday }} زائر فريد اليوم</span>
+          </div>
+        </header>
+
+        <div class="chart">
+          @for (day of s.visitsLast7Days; track day.date) {
+            <div class="chart__bar-wrap">
+              <div class="chart__bar" [style.height.%]="barHeight(day.count)" [title]="day.count + ' زيارة'">
+                <span class="chart__count">{{ day.count }}</span>
+              </div>
+              <div class="chart__label">{{ day.date | date:'EEE' }}</div>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- Recent Messages -->
+      <section class="card">
+        <header class="card__header">
+          <h2>آخر الرسائل</h2>
+          <a routerLink="/admin/messages" class="card__link">عرض الكل</a>
+        </header>
+
+        @if (s.recentMessages.length === 0) {
+          <div class="empty-small">لا توجد رسائل</div>
+        } @else {
+          <ul class="recent-list">
+            @for (m of s.recentMessages; track m.id) {
+              <li class="recent-item" [class.is-unread]="!m.isRead">
+                <div class="recent-item__avatar">{{ m.name.charAt(0) }}</div>
+                <div class="recent-item__body">
+                  <div class="recent-item__name">{{ m.name }}</div>
+                  <div class="recent-item__msg">{{ m.message }}</div>
+                </div>
+                <div class="recent-item__time">{{ m.createdAt | date:'MM-dd' }}</div>
+              </li>
+            }
+          </ul>
+        }
+      </section>
+
+    </div>
+
+  }
+
+</div>

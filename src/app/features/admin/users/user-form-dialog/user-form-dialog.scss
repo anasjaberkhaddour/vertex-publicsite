@@ -1,0 +1,172 @@
+:host {
+  display: contents;
+}
+.dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+  }
+  
+  .dialog {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.25s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+  
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--color-border);
+  
+      h2 {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--color-primary);
+        margin: 0;
+      }
+    }
+  
+    &__close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: var(--color-bg-secondary);
+      cursor: pointer;
+      font-size: 16px;
+      color: var(--color-text-muted);
+      transition: background 0.2s;
+  
+      &:hover { background: var(--color-border); }
+    }
+  
+    &__error {
+      margin: 16px 24px 0;
+      padding: 10px 14px;
+      background: rgba(220, 38, 38, 0.1);
+      color: var(--color-error);
+      border-radius: 8px;
+      font-size: 13.5px;
+    }
+  
+    &__form {
+      padding: 20px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+  
+    &__footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 8px;
+    }
+  }
+  
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  
+    label {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+  
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      padding: 11px 14px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      transition: border-color 0.2s;
+  
+      &:focus {
+        outline: none;
+        border-color: var(--color-accent);
+      }
+    }
+  }
+  
+  .roles-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .role-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 999px;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  
+    input { display: none; }
+  
+    &:hover { border-color: var(--color-accent); }
+  
+    &.active {
+      background: var(--color-primary);
+      color: #fff !important;
+      border-color: var(--color-primary);
+    }
+    * {
+      color: #fff !important;
+    }
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  
+    &--primary {
+      background: var(--color-primary);
+      color: #fff;
+      &:hover:not(:disabled) { background: var(--color-primary-hover); }
+      &:disabled { opacity: 0.6; cursor: not-allowed; }
+    }
+  
+    &--ghost {
+      background: transparent;
+      color: var(--color-text-secondary);
+      border: 1.5px solid var(--color-border);
+      &:hover { background: var(--color-bg-secondary); }
+    }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
