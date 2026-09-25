@@ -8,7 +8,7 @@ import {
 import { environment } from '../../../environments/environment';
 import { ToastService } from '../../core/services/toast';
 import { NgxTurnstileModule } from 'ngx-turnstile';
-import { environment } from '../../../environments/environment';
+
 
 @Component({
   selector: 'app-contact',
