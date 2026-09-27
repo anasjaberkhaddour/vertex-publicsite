@@ -1,6 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
-import { LangService } from './lang';
 
 export interface Toast {
   id: number;
@@ -11,7 +10,6 @@ export interface Toast {
 @Injectable({ providedIn: 'root' })
 export class ToastService {
   private transloco = inject(TranslocoService);
-  private langService = inject(LangService);
 
   toasts = signal<Toast[]>([]);
   private counter = 0;
@@ -23,8 +21,7 @@ export class ToastService {
 
   private show(type: Toast['type'], messageKey: string) {
     const id = ++this.counter;
-    const lang = this.langService.currentAdmin();
-    const message = this.transloco.translate(messageKey, {}, lang);
+    const message = this.transloco.translate(messageKey);
     this.toasts.update(list => [...list, { id, type, message }]);
     setTimeout(() => this.dismiss(id), 4500);
   }
