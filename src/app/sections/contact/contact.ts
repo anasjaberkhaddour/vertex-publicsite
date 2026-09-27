@@ -53,7 +53,7 @@ export class Contact {
       next: (res) => {
         this.loading.set(false);
         this.submitted.set(true);
-        this.toast.success(res.message);
+        this.toast.success('contact.form.success');
       },
       error: () => this.loading.set(false)
     });
