@@ -24,5 +24,6 @@ export interface RefreshTokenRequest {
 
 export interface RefreshTokenResponse {
   token: string;
+  refreshToken: string;
   expiresAt: string;
 }

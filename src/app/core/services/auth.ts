@@ -61,14 +61,28 @@ export class AuthService {
     localStorage.setItem(this.TOKEN_KEY, token);
   }
 
+  // refresh(): Observable<RefreshTokenResponse> {
+  //   const refreshToken = this.getRefreshToken();
+  //   const req: RefreshTokenRequest = { refreshToken: refreshToken ?? '' };
+
+  //   return this.http.post<RefreshTokenResponse>(`${this.apiUrl}/refresh`, req)
+  //     .pipe(
+  //       tap(res => {
+  //         localStorage.setItem(this.TOKEN_KEY, res.token);
+  //       })
+  //     );
+  // }
   refresh(): Observable<RefreshTokenResponse> {
     const refreshToken = this.getRefreshToken();
     const req: RefreshTokenRequest = { refreshToken: refreshToken ?? '' };
-
+  
     return this.http.post<RefreshTokenResponse>(`${this.apiUrl}/refresh`, req)
       .pipe(
         tap(res => {
           localStorage.setItem(this.TOKEN_KEY, res.token);
+          if (res.refreshToken) {
+            localStorage.setItem(this.REFRESH_KEY, res.refreshToken);
+          }
         })
       );
   }
