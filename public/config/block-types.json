@@ -1,0 +1,22 @@
+{
+    "groups": [
+      {
+        "label": "عناصر",
+        "labelEn": "Elements",
+        "items": [
+          { "value": "feature", "label": "ميزة", "labelEn": "Feature" },
+          { "value": "stat", "label": "بطاقة إحصائية", "labelEn": "Stat Card" },
+          { "value": "slide", "label": "شريحة", "labelEn": "Slide" },
+          { "value": "step", "label": "خطوة", "labelEn": "Step" }
+        ]
+      },
+      {
+        "label": "تصنيفات FAQ",
+        "labelEn": "FAQ Categories",
+        "items": [
+          { "value": "general", "label": "عام", "labelEn": "General" },
+          { "value": "technical", "label": "تقني", "labelEn": "Technical" }
+        ]
+      }
+    ]
+  }

@@ -3,16 +3,19 @@ import { CommonModule } from '@angular/common';
 import { UsersService } from '../../../../core/services/users';
 import { RolesService, RoleListItem } from '../../../../core/services/roles';
 import { UserListItem } from '../../../../core/models/user.models';
+import { TranslocoModule } from '@jsverse/transloco';
+import { ToastService } from '../../../../core/services/toast';
 
 @Component({
   selector: 'app-user-roles-dialog',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslocoModule],
   templateUrl: './user-roles-dialog.html',
   styleUrl: './user-roles-dialog.scss'
 })
 export class UserRolesDialog {
   private usersService = inject(UsersService);
   private rolesService = inject(RolesService);
+  private toast = inject(ToastService);
 
   open = input<boolean>(false);
   user = input<UserListItem | null>(null);
@@ -54,6 +57,7 @@ export class UserRolesDialog {
     this.usersService.updateRoles(u.id, { roles: this.selectedRoles() }).subscribe({
       next: () => {
         this.loading.set(false);
+        this.toast.success('admin.users.rolesUpdated');
         this.saved.emit();
       },
       error: () => this.loading.set(false)

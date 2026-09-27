@@ -2,10 +2,11 @@ import { Component, input, output, signal, effect, inject, OnInit } from '@angul
 import { CommonModule } from '@angular/common';
 import { RolesService, RoleListItem, Permission } from '../../../../core/services/roles';
 import { ToastService } from '../../../../core/services/toast';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-role-permissions-dialog',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslocoModule],
   templateUrl: './role-permissions-dialog.html',
   styleUrl: './role-permissions-dialog.scss'
 })
@@ -59,7 +60,7 @@ export class RolePermissionsDialog implements OnInit {
     this.rolesService.assignPermissions(r.id, this.selectedIds()).subscribe({
       next: () => {
         this.loading.set(false);
-        this.toast.success('تم تحديث الصلاحيات');
+        this.toast.success('admin.roles.permissionsUpdated');
         this.saved.emit();
       },
       error: () => this.loading.set(false)

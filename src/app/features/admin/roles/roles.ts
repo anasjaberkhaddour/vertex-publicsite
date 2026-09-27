@@ -6,10 +6,11 @@ import { RoleFormDialog } from './role-form-dialog/role-form-dialog';
 import { RolePermissionsDialog } from './role-permissions-dialog/role-permissions-dialog';
 import { ToastService } from '../../../core/services/toast';
 import { ConfirmService } from '../../../core/services/confirm';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-admin-roles',
-  imports: [CommonModule, RoleFormDialog, RolePermissionsDialog],
+  imports: [CommonModule, RoleFormDialog, RolePermissionsDialog, TranslocoModule],
   templateUrl: './roles.html',
   styleUrl: './roles.scss'
 })
@@ -86,16 +87,16 @@ export class AdminRoles implements OnInit {
     if (this.isProtected(role)) return;
   
     const ok = await this.confirm.confirm({
-      title: 'حذف الدور',
-      message: `هل أنت متأكد من حذف دور "${role.name}"؟ لا يمكن التراجع.`,
+      title: 'admin.roles.deleteTitle',
+      message: 'admin.roles.deleteMessage',
       type: 'danger',
-      confirmText: 'حذف'
+      confirmText: 'admin.common.delete'
     });
     if (!ok) return;
   
     this.rolesService.delete(role.id).subscribe({
       next: () => {
-        this.toast.success('تم حذف الدور');
+        this.toast.success('admin.roles.roleDeleted');
         this.load();
       }
     });

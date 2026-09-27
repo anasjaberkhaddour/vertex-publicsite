@@ -1,0 +1,122 @@
+<div class="section-editor">
+
+  <header class="section-editor__header">
+    <a routerLink="/admin/content" class="back-link">→ {{ 'admin.contentAdmin.backToSections' | transloco }}</a>
+    <span class="key-badge">{{ sectionKey() }}</span>
+  </header>
+
+  <!-- Section Info -->
+  <section class="card">
+    <h2 class="card__title">{{ 'admin.contentAdmin.sectionData' | transloco }}</h2>
+
+    <!-- السطر الأول: العنوان + العنوان الفرعي + الحالة -->
+    <div class="section-row-3">
+      <div class="form-field">
+        <label>{{ 'admin.contentAdmin.titleField' | transloco }}</label>
+        <input type="text" [(ngModel)]="sectionForm.title" />
+      </div>
+
+      <div class="form-field">
+        <label>{{ 'admin.contentAdmin.subTitleField' | transloco }}</label>
+        <input type="text" [(ngModel)]="sectionForm.subTitle" />
+      </div>
+
+      <div class="form-field">
+        <label>{{ 'admin.common.status' | transloco }}</label>
+        <label class="switch">
+          <input type="checkbox" [(ngModel)]="sectionForm.isActive" />
+          <span>{{ (sectionForm.isActive ? 'admin.common.active' : 'admin.common.inactive') | transloco }}</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- السطر الثاني: الوصف + زر الحفظ -->
+    <div class="section-row-desc">
+      <div class="form-field">
+        <label>{{ 'admin.contentAdmin.descriptionField' | transloco }}</label>
+        <textarea rows="3" [(ngModel)]="sectionForm.description"></textarea>
+      </div>
+
+      @if (can('content.edit')) {
+        <button class="btn btn--primary" (click)="saveSection()" [disabled]="savingSection()">
+          {{ (savingSection() ? 'admin.common.saving' : 'admin.common.save') | transloco }}
+        </button>
+      }
+    </div>
+  </section>
+
+  <!-- Blocks -->
+  <section class="card">
+    <div class="card__header">
+      <h2 class="card__title">{{ 'admin.contentAdmin.blocksTitle' | transloco }} ({{ blocks().length }})</h2>
+      @if (can('content.edit')) {
+        <button class="btn btn--primary btn--sm" (click)="openCreateBlock()">
+          {{ 'admin.contentAdmin.addBlock' | transloco }}
+        </button>
+      }
+    </div>
+
+    @if (loading()) {
+      <div class="loading">{{ 'admin.common.loading' | transloco }}</div>
+    } @else if (blocks().length === 0) {
+      <div class="empty">{{ 'admin.common.empty' | transloco }}</div>
+    } @else {
+      <table class="blocks-table">
+        <thead>
+          <tr>
+            <th>{{ 'admin.contentAdmin.typeField' | transloco }}</th>
+            <th>{{ 'admin.contentAdmin.titleField' | transloco }}</th>
+            <th>{{ 'admin.contentAdmin.icon' | transloco }}</th>
+            <th>{{ 'admin.common.order' | transloco }}</th>
+            <th>{{ 'admin.contentAdmin.featuredField' | transloco }}</th>
+            <th>{{ 'admin.common.status' | transloco }}</th>
+            <th>{{ 'admin.common.actions' | transloco }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (b of blocks(); track b.id) {
+            <tr>
+              <td>
+                @if (b.type) {
+                  <span class="type-badge">{{ b.type }}</span>
+                } @else {
+                  <span class="type-empty">—</span>
+                }
+              </td>
+              <td><strong>{{ b.title }}</strong></td>
+              <td><code>{{ b.icon || '—' }}</code></td>
+              <td>{{ b.order }}</td>
+              <td>
+                @if (b.isFeatured) {
+                  <span class="featured-badge">★</span>
+                } @else {
+                  <span class="type-empty">—</span>
+                }
+              </td>
+              <td>
+                <span class="status" [class.status--active]="b.isActive" [class.status--inactive]="!b.isActive">
+                  {{ (b.isActive ? 'admin.common.active' : 'admin.common.inactive') | transloco }}
+                </span>
+              </td>
+              <td class="actions">
+                @if (can('content.edit')) {
+                  <button class="icon-btn" [title]="'admin.common.edit' | transloco" (click)="openEditBlock(b)">✎</button>
+                  <button class="icon-btn icon-btn--danger" [title]="'admin.common.delete' | transloco" (click)="deleteBlock(b)">🗑</button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </section>
+
+</div>
+
+<app-block-form-dialog
+  [open]="showBlockDialog()"
+  [block]="editingBlock()"
+  [sectionId]="sectionId()"
+  [lang]="currentLang"
+  (saved)="onBlockSaved()"
+  (closed)="closeBlockDialog()" />

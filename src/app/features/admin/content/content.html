@@ -1,0 +1,33 @@
+<div class="content-admin">
+  <header class="content-admin__header">
+    <div>
+      <h1>{{ 'admin.contentAdmin.title' | transloco }}</h1>
+      <p>{{ 'admin.contentAdmin.subtitle' | transloco }}</p>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="loading">{{ 'admin.common.loading' | transloco }}</div>
+  } @else if (sections().length === 0) {
+    <div class="empty">{{ 'admin.common.empty' | transloco }}</div>
+  } @else {
+    <div class="sections-grid">
+      @for (s of sections(); track s.id) {
+        <a [routerLink]="['/admin/content', s.key]" class="section-card">
+          <div class="section-card__header">
+            <span class="section-card__key">{{ s.key }}</span>
+            <span class="status" [class.status--active]="s.isActive" [class.status--inactive]="!s.isActive">
+              {{ (s.isActive ? 'admin.common.active' : 'admin.common.inactive') | transloco }}
+            </span>
+          </div>
+          <h3 class="section-card__title">{{ s.title || s.key }}</h3>
+          <p class="section-card__sub">{{ s.subTitle }}</p>
+          <div class="section-card__footer">
+            <span class="badge">{{ s.blocksCount }} {{ 'admin.contentAdmin.blocksCount' | transloco }}</span>
+            <span class="section-card__arrow">←</span>
+          </div>
+        </a>
+      }
+    </div>
+  }
+</div>

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
+import { ContentService } from '../../core/services/content';
 
 @Component({
   selector: 'app-cta',
@@ -7,4 +8,8 @@ import { TranslocoModule } from '@jsverse/transloco';
   templateUrl: './cta.html',
   styleUrl: './cta.scss'
 })
-export class Cta {}
+export class Cta {
+  private contentService = inject(ContentService);
+
+  section = computed(() => this.contentService.getSection('cta'));
+}

@@ -4,16 +4,19 @@ import { CommonModule } from '@angular/common';
 import { UsersService } from '../../../../core/services/users';
 import { RolesService, RoleListItem } from '../../../../core/services/roles';
 import { UserListItem, CreateUserRequest } from '../../../../core/models/user.models';
+import { TranslocoModule } from '@jsverse/transloco';
+import { ToastService } from '../../../../core/services/toast';
 
 @Component({
   selector: 'app-user-form-dialog',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslocoModule],
   templateUrl: './user-form-dialog.html',
   styleUrl: './user-form-dialog.scss'
 })
 export class UserFormDialog {
   private usersService = inject(UsersService);
   private rolesService = inject(RolesService);
+  private toast = inject(ToastService);
 
   open = input<boolean>(false);
   user = input<UserListItem | null>(null);
@@ -23,7 +26,6 @@ export class UserFormDialog {
 
   roles = signal<RoleListItem[]>([]);
   loading = signal(false);
-  //error = signal<string | null>(null);
 
   form = {
     email: '',
@@ -33,15 +35,12 @@ export class UserFormDialog {
   };
 
   constructor() {
-    // إعادة تعيين النموذج عند الفتح
     effect(() => {
       if (this.open()) {
         const u = this.user();
         if (u) {
-          // وضع التعديل
           this.form = { email: u.email, password: '', fullName: u.fullName, roles: [...u.roles] };
         } else {
-          // وضع الإضافة
           this.form = { email: '', password: '', fullName: '', roles: [] };
         }
       }
@@ -71,9 +70,9 @@ export class UserFormDialog {
   submit(e: Event) {
     e.preventDefault();
     this.loading.set(true);
-  
+
     const u = this.user();
-  
+
     if (u) {
       this.usersService.update(u.id, { fullName: this.form.fullName, isActive: true })
         .subscribe({
@@ -81,6 +80,7 @@ export class UserFormDialog {
             this.usersService.updateRoles(u.id, { roles: this.form.roles }).subscribe({
               next: () => {
                 this.loading.set(false);
+                this.toast.success('admin.users.userUpdated');
                 this.saved.emit();
               },
               error: () => this.loading.set(false)
@@ -98,6 +98,7 @@ export class UserFormDialog {
       this.usersService.create(req).subscribe({
         next: () => {
           this.loading.set(false);
+          this.toast.success('admin.users.userCreated');
           this.saved.emit();
         },
         error: () => this.loading.set(false)

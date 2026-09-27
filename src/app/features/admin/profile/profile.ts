@@ -5,10 +5,11 @@ import { UsersService } from '../../../core/services/users';
 import { AuthService } from '../../../core/services/auth';
 import { ToastService } from '../../../core/services/toast';
 import { UserDetails, ChangePasswordRequest } from '../../../core/models/user.models';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-admin-profile',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslocoModule],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
 })

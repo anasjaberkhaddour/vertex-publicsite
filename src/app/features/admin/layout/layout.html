@@ -1,33 +1,56 @@
 <div class="admin">
 
-    <aside class="admin__sidebar">
-      <div class="admin__brand">
-        <img src="logo.png" alt="Vertex" />
-      </div>
-  
-      <nav class="admin__nav">
-        <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          الرئيسية
+  <aside class="admin__sidebar">
+
+    <div class="admin__brand">
+      <img src="logo.png" alt="Vertex" />
+    </div>
+
+    <!-- Language Switcher -->
+    <div class="admin__lang">
+      <button
+        [class.active]="currentLang() === 'ar'"
+        (click)="switchLang('ar')">AR</button>
+      <span>/</span>
+      <button
+        [class.active]="currentLang() === 'en'"
+        (click)="switchLang('en')">EN</button>
+    </div>
+
+    <nav class="admin__nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        {{ 'admin.menu.dashboard' | transloco }}
+      </a>
+      <a routerLink="/admin/users" routerLinkActive="active">
+        {{ 'admin.menu.users' | transloco }}
+      </a>
+      <a routerLink="/admin/roles" routerLinkActive="active">
+        {{ 'admin.menu.roles' | transloco }}
+      </a>
+      <a routerLink="/admin/messages" routerLinkActive="active">
+        {{ 'admin.menu.messages' | transloco }}
+      </a>
+      <a routerLink="/admin/content" routerLinkActive="active">
+        {{ 'admin.menu.content' | transloco }}
+      </a>
+    </nav>
+
+    <div class="admin__footer">
+      <div class="admin__user">
+        <a routerLink="/admin/profile" class="admin__user-link">
+          <span>{{ auth.currentUser()?.fullName }}</span>
+          <small>{{ auth.currentUser()?.email }}</small>
         </a>
-        <a routerLink="/admin/users" routerLinkActive="active">المستخدمون</a>
-        <a routerLink="/admin/roles" routerLinkActive="active">الأدوار</a>
-        <a routerLink="/admin/messages" routerLinkActive="active">الرسائل</a>
-        <a routerLink="/admin/profile" routerLinkActive="active">ملفي الشخصي</a>
-      </nav>
-  
-      <div class="admin__footer">
-        <div class="admin__user">
-          <a routerLink="/admin/profile" class="admin__user-link">
-            <span>{{ auth.currentUser()?.fullName }}</span>
-            <small>{{ auth.currentUser()?.email }}</small>
-          </a>
-          <button class="admin__logout" (click)="logout()">خروج</button>
-        </div>
+        <button class="admin__logout" (click)="logout()">
+          {{ 'admin.menu.logout' | transloco }}
+        </button>
       </div>
-    </aside>
-  
-    <main class="admin__main">
-      <router-outlet />
-    </main>
-  
-  </div>
+    </div>
+
+  </aside>
+
+  <main class="admin__main">
+    <router-outlet />
+  </main>
+
+</div>

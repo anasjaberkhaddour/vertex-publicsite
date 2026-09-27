@@ -1,0 +1,114 @@
+.content-admin {
+    &__header {
+      margin-bottom: 28px;
+  
+      h1 {
+        font-size: 24px;
+        color: var(--color-primary);
+        margin: 0 0 4px;
+      }
+  
+      p {
+        font-size: 13.5px;
+        color: var(--color-text-muted);
+        margin: 0;
+      }
+    }
+  }
+  
+  .sections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  
+  .section-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 22px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.25s ease;
+  
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(30, 58, 95, 0.1);
+      border-color: var(--color-accent);
+    }
+  
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    &__key {
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--color-text-muted);
+      background: var(--color-bg-secondary);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+  
+    &__title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin: 0;
+      line-height: 1.4;
+    }
+  
+    &__sub {
+      font-size: 13.5px;
+      color: var(--color-text-secondary);
+      margin: 0;
+      line-height: 1.6;
+    }
+  
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--color-border);
+    }
+  
+    &__arrow {
+      color: var(--color-accent);
+      font-size: 18px;
+      font-weight: 700;
+    }
+  }
+  
+  .status {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+  
+    &--active { background: rgba(22, 163, 74, 0.1); color: var(--color-success); }
+    &--inactive { background: rgba(107, 114, 128, 0.1); color: var(--color-text-muted); }
+  }
+  
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--color-accent);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .loading, .empty {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--color-text-muted);
+  }

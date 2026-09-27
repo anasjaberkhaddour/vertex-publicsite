@@ -42,6 +42,16 @@ export const routes: Routes = [
         path: 'messages',
         loadComponent: () =>
           import('./features/admin/messages/messages').then(m => m.AdminMessages)
+      },
+      {
+        path: 'content',
+        loadComponent: () =>
+          import('./features/admin/content/content').then(m => m.AdminContent)
+      },
+      {
+        path: 'content/:key',
+        loadComponent: () =>
+          import('./features/admin/content/section-editor/section-editor').then(m => m.SectionEditor)
       }
     ]
   },

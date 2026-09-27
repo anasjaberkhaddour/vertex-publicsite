@@ -1,14 +1,15 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { TranslocoModule } from '@jsverse/transloco';
+import { NgxTurnstileModule } from 'ngx-turnstile';
 import {
-  LucideDynamicIcon, LucideMail, LucidePhone, LucideMapPin, LucideClock, LucideSend
+  LucideDynamicIcon, LucideSend
 } from '@lucide/angular';
 import { environment } from '../../../environments/environment';
 import { ToastService } from '../../core/services/toast';
-import { NgxTurnstileModule } from 'ngx-turnstile';
-
+import { ContentService } from '../../core/services/content';
+import { getIcon } from '../../core/utils/icon-map';
 
 @Component({
   selector: 'app-contact',
@@ -19,19 +20,16 @@ import { NgxTurnstileModule } from 'ngx-turnstile';
 export class Contact {
   private http = inject(HttpClient);
   private toast = inject(ToastService);
+  private contentService = inject(ContentService);
 
   submitted = signal(false);
   loading = signal(false);
 
-  mailIcon = LucideMail;
-  phoneIcon = LucidePhone;
-  pinIcon = LucideMapPin;
-  clockIcon = LucideClock;
-  sendIcon = LucideSend;
+  section = computed(() => this.contentService.getSection('contact'));
+  infoBlocks = computed(() => this.section()?.blocks ?? []);
 
-  captchaToken = signal<string | null>(null);
-  //siteKey = '0x4AAAAAAFDJCW2OwfCc_3Pk'; // من Cloudflare
-  siteKey = environment.turnstileSiteKey;
+  sendIcon = LucideSend;
+  getIcon = getIcon;
 
   form = {
     name: '',
@@ -40,6 +38,9 @@ export class Contact {
     company: '',
     message: ''
   };
+
+  captchaToken = signal<string | null>(null);
+  siteKey = environment.turnstileSiteKey;
 
   onSubmit(e: Event) {
     e.preventDefault();

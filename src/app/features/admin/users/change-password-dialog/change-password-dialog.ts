@@ -3,15 +3,18 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../../../../core/services/users';
 import { UserListItem } from '../../../../core/models/user.models';
+import { TranslocoModule } from '@jsverse/transloco';
+import { ToastService } from '../../../../core/services/toast';
 
 @Component({
   selector: 'app-change-password-dialog',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslocoModule],
   templateUrl: './change-password-dialog.html',
   styleUrl: './change-password-dialog.scss'
 })
 export class ChangePasswordDialog {
   private usersService = inject(UsersService);
+  private toast = inject(ToastService);
 
   open = input<boolean>(false);
   user = input<UserListItem | null>(null);
@@ -39,6 +42,7 @@ export class ChangePasswordDialog {
         this.loading.set(false);
         this.newPassword = '';
         this.confirmPassword = '';
+        this.toast.success('admin.users.passwordChanged');
         this.saved.emit();
       },
       error: () => this.loading.set(false)

@@ -1,0 +1,94 @@
+@if (open()) {
+  <div class="dialog-overlay" (click)="cancel()">
+    <div class="dialog" (click)="$event.stopPropagation()">
+
+      <header class="dialog__header">
+        <h2>{{ (isEdit() ? 'admin.contentAdmin.editBlock' : 'admin.contentAdmin.addBlockNew') | transloco }}</h2>
+        <button class="dialog__close" (click)="cancel()">✕</button>
+      </header>
+
+      <form (ngSubmit)="submit($event)" class="dialog__form">
+
+        <!-- العنوان -->
+        <div class="form-field">
+          <label>{{ 'admin.contentAdmin.titleField' | transloco }}</label>
+          <input type="text" [(ngModel)]="form.title" name="title" required />
+        </div>
+
+        <!-- الوصف -->
+        <div class="form-field">
+          <label>{{ 'admin.contentAdmin.descriptionField' | transloco }}</label>
+          <textarea rows="3" [(ngModel)]="form.description" name="description"></textarea>
+        </div>
+
+        <!-- الصورة -->
+        <div class="form-field">
+          <label>{{ 'admin.contentAdmin.imageField' | transloco }}</label>
+          <app-image-uploader
+            [value]="form.imagePath || ''"
+            (changed)="form.imagePath = $event" />
+        </div>
+
+        <div class="form-row-4">
+          <div class="form-field">
+            <label>{{ 'admin.contentAdmin.typeField' | transloco }}</label>
+            <select [(ngModel)]="form.type" name="type">
+              <option value="">— بدون —</option>
+              @if (blockTypes(); as bt) {
+                @for (group of bt.groups; track group.label) {
+                  <optgroup [label]="group.label">
+                    @for (item of group.items; track item.value) {
+                      <option [value]="item.value">{{ item.label }}</option>
+                    }
+                  </optgroup>
+                }
+              }
+            </select>
+          </div>
+        
+          <div class="form-field">
+            <label>{{ 'admin.contentAdmin.icon' | transloco }}</label>
+            <select [(ngModel)]="form.icon" name="icon">
+              <option value="">— بدون —</option>
+              @for (name of iconNames; track name) {
+                <option [value]="name">{{ name }}</option>
+              }
+            </select>
+          </div>
+        
+          <div class="form-field">
+            <label>{{ 'admin.common.order' | transloco }}</label>
+            <input type="number" [(ngModel)]="form.order" name="order" />
+          </div>
+        
+          <div class="form-field">
+            <label>{{ 'admin.contentAdmin.featuredField' | transloco }}</label>
+            <label class="switch">
+              <input type="checkbox" [(ngModel)]="form.isFeatured" name="isFeatured" />
+              <span>{{ (form.isFeatured ? 'admin.common.yes' : 'admin.common.no') | transloco }}</span>
+            </label>
+          </div>
+        
+          <div class="form-field">
+            <label>{{ 'admin.common.status' | transloco }}</label>
+            <label class="switch">
+              <input type="checkbox" [(ngModel)]="form.isActive" name="isActive" />
+              <span>{{ (form.isActive ? 'admin.common.active' : 'admin.common.inactive') | transloco }}</span>
+            </label>
+          </div>
+        </div>
+
+        <footer class="dialog__footer">
+          <button type="button" class="btn btn--ghost" (click)="cancel()">
+            {{ 'admin.common.cancel' | transloco }}
+          </button>
+          <button type="submit" class="btn btn--primary" [disabled]="loading()">
+            {{ (loading() ? 'admin.common.saving' : 'admin.common.save') | transloco }}
+          </button>
+        </footer>
+
+      </form>
+
+    </div>
+  </div>
+}

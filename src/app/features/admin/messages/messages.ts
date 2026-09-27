@@ -6,10 +6,11 @@ import { ConfirmService } from '../../../core/services/confirm';
 import { ToastService } from '../../../core/services/toast';
 import { ContactMessage } from '../../../core/models/contact.models';
 import { MessageDetailsDialog } from './message-details-dialog/message-details-dialog';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-admin-messages',
-  imports: [CommonModule, MessageDetailsDialog],
+  imports: [CommonModule, MessageDetailsDialog, TranslocoModule],
   templateUrl: './messages.html',
   styleUrl: './messages.scss'
 })
@@ -74,16 +75,16 @@ export class AdminMessages implements OnInit {
 
   async deleteMessage(msg: ContactMessage) {
     const ok = await this.confirm.confirm({
-      title: 'حذف الرسالة',
-      message: `هل أنت متأكد من حذف رسالة "${msg.name}"؟`,
+      title: 'admin.messages.deleteTitle',
+      message: 'admin.messages.deleteMessage',
       type: 'danger',
-      confirmText: 'حذف'
+      confirmText: 'admin.common.delete'
     });
     if (!ok) return;
 
     this.contactService.delete(msg.id).subscribe({
       next: () => {
-        this.toast.success('تم حذف الرسالة');
+        this.toast.success('admin.messages.messageDeleted');
         this.load();
       }
     });

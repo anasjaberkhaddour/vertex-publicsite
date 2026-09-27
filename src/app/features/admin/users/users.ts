@@ -9,10 +9,11 @@ import { UserRolesDialog } from './user-roles-dialog/user-roles-dialog';
 import { ChangePasswordDialog } from './change-password-dialog/change-password-dialog';
 import { ToastService } from '../../../core/services/toast';
 import { ConfirmService } from '../../../core/services/confirm';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-admin-users',
-  imports: [CommonModule, FormsModule, UserFormDialog, UserRolesDialog, ChangePasswordDialog],
+  imports: [CommonModule, FormsModule, UserFormDialog, UserRolesDialog, ChangePasswordDialog, TranslocoModule],
   templateUrl: './users.html',
   styleUrl: './users.scss'
 })
@@ -112,21 +113,26 @@ export class AdminUsers implements OnInit {
   // ===== Actions =====
   toggleActive(u: UserListItem) {
     this.usersService.update(u.id, { fullName: u.fullName, isActive: !u.isActive })
-      .subscribe({ next: () => this.load() });
+      .subscribe({
+        next: () => {
+          this.toast.success(u.isActive ? 'admin.users.userDeactivated' : 'admin.users.userActivated');
+          this.load();
+        }
+      });
   }
 
   async deleteUser(u: UserListItem) {
     const ok = await this.confirm.confirm({
-      title: 'حذف المستخدم',
-      message: `هل أنت متأكد من حذف "${u.fullName}"؟ لا يمكن التراجع.`,
+      title: 'admin.users.deleteTitle',
+      message: 'admin.users.deleteMessage',
       type: 'danger',
-      confirmText: 'حذف'
+      confirmText: 'admin.common.delete'
     });
     if (!ok) return;
   
     this.usersService.delete(u.id).subscribe({
       next: () => {
-        this.toast.success('تم حذف المستخدم');
+        this.toast.success('admin.users.userDeleted');
         this.load();
       }
     });

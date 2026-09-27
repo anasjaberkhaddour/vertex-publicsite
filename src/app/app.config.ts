@@ -20,6 +20,7 @@ export const appConfig: ApplicationConfig = {
         fallbackLang: 'en',
         reRenderOnLangChange: true,
         prodMode: !isDevMode(),
+        // ⚠️ هذا لا يعطل الحفظ — Transloco يحفظ بـ `translocoLang` افتراضياً
       },
       loader: TranslocoHttpLoader,
     }),

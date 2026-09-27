@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth';
 import { StatsService, DashboardStats } from '../../../core/services/stats';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslocoModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })

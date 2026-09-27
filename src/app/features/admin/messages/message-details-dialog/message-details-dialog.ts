@@ -1,10 +1,11 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactMessage } from '../../../../core/models/contact.models';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-message-details-dialog',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslocoModule],
   templateUrl: './message-details-dialog.html',
   styleUrl: './message-details-dialog.scss'
 })

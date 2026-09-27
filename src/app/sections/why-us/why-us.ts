@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
-import {
-  LucideLayers, LucidePuzzle, LucideShieldCheck,
-  LucideHeadphones, LucideLanguages, LucideZap,
-  LucideDynamicIcon
-} from '@lucide/angular';
+import { LucideDynamicIcon } from '@lucide/angular';
 import { Reveal } from '../../directives/reveal';
+import { ContentService } from '../../core/services/content';
+import { getIcon } from '../../core/utils/icon-map';
+import { imageUrl } from '../../core/utils/image-url';
 
 @Component({
   selector: 'app-why-us',
@@ -14,12 +13,18 @@ import { Reveal } from '../../directives/reveal';
   styleUrl: './why-us.scss'
 })
 export class WhyUs {
-  features = [
-    { key: 'integration',   icon: LucideLayers },
-    { key: 'customization', icon: LucidePuzzle },
-    { key: 'security',      icon: LucideShieldCheck },
-    { key: 'support',       icon: LucideHeadphones },
-    { key: 'arabic',        icon: LucideLanguages },
-    { key: 'performance',   icon: LucideZap }
-  ];
+  private contentService = inject(ContentService);
+
+  section = computed(() => this.contentService.getSection('why'));
+
+  statBlock = computed(() =>
+    this.section()?.blocks.find(b => b.type === 'stat')
+  );
+
+  featureBlocks = computed(() =>
+    this.section()?.blocks.filter(b => b.type !== 'stat') ?? []
+  );
+
+  getIcon = getIcon;
+  imageUrl = imageUrl;
 }

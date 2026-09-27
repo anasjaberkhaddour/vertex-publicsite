@@ -1,35 +1,41 @@
-<section class="why" id="why">
+@if (section(); as s) {
+  <section class="why" id="why">
     <div class="container">
-  
+
       <div class="why__header">
-        <span class="why__badge">{{ 'why.badge' | transloco }}</span>
-        <h2 class="why__title">{{ 'why.title' | transloco }}</h2>
-        <p class="why__subtitle">{{ 'why.subtitle' | transloco }}</p>
+        <span class="why__badge">{{ s.subTitle }}</span>
+        <h2 class="why__title">{{ s.title }}</h2>
+        <p class="why__subtitle">{{ s.description }}</p>
       </div>
-  
+
       <div class="why__bento">
-  
-       <!-- Large Stat Card -->
-       <article class="bento bento--stat" appReveal>
-        <img class="bento__bg" src="/screenshots/why-us.jpg" alt="" />
-        <div class="bento__overlay"></div>
-      
-        <div class="bento__stat-value">{{ 'why.stat.value' | transloco }}</div>
-        <div class="bento__stat-label">{{ 'why.stat.label' | transloco }}</div>
-      </article>
-  
-        <!-- Features -->
-        @for (feature of features; track feature.key; let i = $index) {
-          <article class="bento bento--feature" appReveal [appRevealDelay]="150 + i * 80">
-            <div class="bento__icon">
-              <svg [lucideIcon]="feature.icon" [size]="22" [strokeWidth]="1.8"></svg>
-            </div>
-            <h3 class="bento__title">{{ 'why.items.' + feature.key + '.title' | transloco }}</h3>
-            <p class="bento__desc">{{ 'why.items.' + feature.key + '.desc' | transloco }}</p>
+
+        <!-- Stat Card -->
+        @if (statBlock(); as stat) {
+          <article class="bento bento--stat" appReveal>
+            @if (stat.imagePath) {
+              <img class="bento__bg" [src]="imageUrl(stat.imagePath)" alt="" />
+              <div class="bento__overlay"></div>
+            }
+
+            <div class="bento__stat-value">{{ stat.title }}</div>
+            <div class="bento__stat-label">{{ stat.description }}</div>
           </article>
         }
-  
+
+        <!-- Feature Blocks -->
+        @for (feature of featureBlocks(); track feature.id; let i = $index) {
+          <article class="bento bento--feature" appReveal [appRevealDelay]="150 + i * 80">
+            <div class="bento__icon">
+              <svg [lucideIcon]="getIcon(feature.icon)" [size]="22" [strokeWidth]="1.8"></svg>
+            </div>
+            <h3 class="bento__title">{{ feature.title }}</h3>
+            <p class="bento__desc">{{ feature.description }}</p>
+          </article>
+        }
+
       </div>
-  
+
     </div>
   </section>
+}

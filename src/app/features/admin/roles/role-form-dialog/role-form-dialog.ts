@@ -2,15 +2,18 @@ import { Component, input, output, signal, effect, inject, OnInit } from '@angul
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RolesService, RoleListItem, Permission } from '../../../../core/services/roles';
+import { TranslocoModule } from '@jsverse/transloco';
+import { ToastService } from '../../../../core/services/toast';
 
 @Component({
   selector: 'app-role-form-dialog',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslocoModule],
   templateUrl: './role-form-dialog.html',
   styleUrl: './role-form-dialog.scss'
 })
 export class RoleFormDialog implements OnInit {
   private rolesService = inject(RolesService);
+  private toast = inject(ToastService);
 
   open = input<boolean>(false);
   role = input<RoleListItem | null>(null);
@@ -33,11 +36,8 @@ export class RoleFormDialog implements OnInit {
         const r = this.role();
         this.selectedPermissionIds.set([]);
         if (r) {
-          // وضع التعديل — نحمّل تفاصيل الدور
           this.form = { name: r.name, description: r.description ?? '' };
           this.rolesService.getById(r.id).subscribe(details => {
-            // نحتاج IDs للصلاحيات، لكن `details` يعيد أسماء فقط.
-            // الحل: نطابق الأسماء مع القائمة الكاملة.
             const all = this.permissions();
             const ids = details.permissions
               .map(name => all.find(p => p.name === name)?.id)
@@ -74,12 +74,12 @@ export class RoleFormDialog implements OnInit {
     const r = this.role();
 
     if (r) {
-      // تعديل — الوصف + الصلاحيات
       this.rolesService.update(r.id, { description: this.form.description }).subscribe({
         next: () => {
           this.rolesService.assignPermissions(r.id, this.selectedPermissionIds()).subscribe({
             next: () => {
               this.loading.set(false);
+              this.toast.success('admin.roles.roleUpdated');
               this.saved.emit();
             },
             error: () => this.loading.set(false)
@@ -88,7 +88,6 @@ export class RoleFormDialog implements OnInit {
         error: () => this.loading.set(false)
       });
     } else {
-      // إضافة
       this.rolesService.create({
         name: this.form.name,
         description: this.form.description,
@@ -96,6 +95,7 @@ export class RoleFormDialog implements OnInit {
       }).subscribe({
         next: () => {
           this.loading.set(false);
+          this.toast.success('admin.roles.roleCreated');
           this.saved.emit();
         },
         error: () => this.loading.set(false)

@@ -1,13 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
-import {
-  LucideUsers, LucideTarget, LucideClock, LucideWallet,
-  LucideChartBar, LucideCalculator, LucideFactory, LucidePackage,
-  LucideCar, LucideTrendingUp, LucideMessageSquare, LucideFileText,
-  LucideSmartphone, LucideBuilding2, LucideSearch, LucideLock,
-  LucideDynamicIcon
-} from '@lucide/angular';
+import { LucideDynamicIcon } from '@lucide/angular';
 import { Reveal } from '../../directives/reveal';
+import { ContentService } from '../../core/services/content';
+import { getIcon } from '../../core/utils/icon-map';
 
 @Component({
   selector: 'app-modules',
@@ -16,22 +12,9 @@ import { Reveal } from '../../directives/reveal';
   styleUrl: './modules.scss'
 })
 export class Modules {
-  modules = [
-    { key: 'hr',           icon: LucideUsers },
-    { key: 'recruitment',  icon: LucideTarget },
-    { key: 'attendance',   icon: LucideClock },
-    { key: 'payroll',      icon: LucideWallet },
-    { key: 'finance',      icon: LucideChartBar },
-    { key: 'costing',      icon: LucideCalculator },
-    { key: 'production',   icon: LucideFactory },
-    { key: 'inventory',    icon: LucidePackage },
-    { key: 'garage',       icon: LucideCar },
-    { key: 'performance',  icon: LucideTrendingUp },
-    { key: 'messaging',    icon: LucideMessageSquare },
-    { key: 'employeeFile', icon: LucideFileText },
-    { key: 'mobileApp',    icon: LucideSmartphone },
-    { key: 'entities',     icon: LucideBuilding2 },
-    { key: 'auditLog',     icon: LucideSearch },
-    { key: 'users',        icon: LucideLock }
-  ];
+  private contentService = inject(ContentService);
+
+  section = computed(() => this.contentService.getSection('modules'));
+
+  getIcon = getIcon;
 }

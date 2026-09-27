@@ -1,0 +1,33 @@
+<div class="uploader">
+
+  @if (value()) {
+    <!-- معاينة -->
+    <div class="uploader__preview" (click)="selectFile()">
+      <img [src]="previewUrl" alt="preview" />
+      <button type="button" class="uploader__remove" (click)="remove($event)" [title]="'admin.common.delete' | transloco">
+        ✕
+      </button>
+    </div>
+  } @else {
+    <!-- منطقة الرفع -->
+    <div
+      class="uploader__dropzone"
+      [class.is-dragover]="dragOver()"
+      [class.is-uploading]="uploading()"
+      (click)="selectFile()"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave()"
+      (drop)="onDrop($event)">
+
+      @if (uploading()) {
+        <div class="uploader__spinner"></div>
+        <p>{{ 'admin.common.saving' | transloco }}</p>
+      } @else {
+        <div class="uploader__icon">📷</div>
+        <p class="uploader__text">{{ 'admin.contentAdmin.dropImageHere' | transloco }}</p>
+        <p class="uploader__hint">{{ 'admin.contentAdmin.imageHint' | transloco }}</p>
+      }
+    </div>
+  }
+
+</div>

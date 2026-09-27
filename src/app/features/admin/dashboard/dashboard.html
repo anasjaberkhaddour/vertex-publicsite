@@ -2,24 +2,23 @@
 
   <header class="dashboard__header">
     <div>
-      <h1>مرحباً، {{ auth.currentUser()?.fullName }}</h1>
-      <p>نظرة سريعة على حالة المنصة</p>
+      <h1>{{ 'admin.dashboard.welcome' | transloco }}، {{ auth.currentUser()?.fullName }}</h1>
+      <p>{{ 'admin.dashboard.subtitle' | transloco }}</p>
     </div>
   </header>
 
   @if (loading()) {
-    <div class="loading">جارٍ التحميل...</div>
+    <div class="loading">{{ 'admin.common.loading' | transloco }}</div>
   } @else if (stats(); as s) {
 
-    <!-- Stat Cards -->
     <div class="stats-grid">
 
       <a routerLink="/admin/users" class="stat-card stat-card--blue">
         <div class="stat-card__icon">👥</div>
         <div>
           <div class="stat-card__value">{{ s.totalUsers }}</div>
-          <div class="stat-card__label">المستخدمون</div>
-          <div class="stat-card__sub">{{ s.activeUsers }} نشط</div>
+          <div class="stat-card__label">{{ 'admin.dashboard.users' | transloco }}</div>
+          <div class="stat-card__sub">{{ s.activeUsers }} {{ 'admin.dashboard.activeCount' | transloco }}</div>
         </div>
       </a>
 
@@ -27,7 +26,7 @@
         <div class="stat-card__icon">🛡</div>
         <div>
           <div class="stat-card__value">{{ s.totalRoles }}</div>
-          <div class="stat-card__label">الأدوار</div>
+          <div class="stat-card__label">{{ 'admin.dashboard.roles' | transloco }}</div>
         </div>
       </a>
 
@@ -35,9 +34,11 @@
         <div class="stat-card__icon">✉</div>
         <div>
           <div class="stat-card__value">{{ s.totalMessages }}</div>
-          <div class="stat-card__label">الرسائل</div>
+          <div class="stat-card__label">{{ 'admin.dashboard.messages' | transloco }}</div>
           @if (s.unreadMessages > 0) {
-            <div class="stat-card__sub stat-card__sub--alert">{{ s.unreadMessages }} غير مقروءة</div>
+            <div class="stat-card__sub stat-card__sub--alert">
+              {{ s.unreadMessages }} {{ 'admin.dashboard.unreadCount' | transloco }}
+            </div>
           }
         </div>
       </a>
@@ -46,31 +47,29 @@
         <div class="stat-card__icon">👁</div>
         <div>
           <div class="stat-card__value">{{ s.totalVisits }}</div>
-          <div class="stat-card__label">إجمالي الزيارات</div>
-          <div class="stat-card__sub">{{ s.visitsToday }} اليوم</div>
+          <div class="stat-card__label">{{ 'admin.dashboard.visits' | transloco }}</div>
+          <div class="stat-card__sub">{{ s.visitsToday }} {{ 'admin.dashboard.visitsToday' | transloco }}</div>
         </div>
       </div>
 
     </div>
 
-    <!-- Charts Row -->
     <div class="charts-grid">
 
-      <!-- Visits Chart -->
       <section class="card">
         <header class="card__header">
-          <h2>الزيارات آخر 7 أيام</h2>
+          <h2>{{ 'admin.dashboard.visitsLast7Days' | transloco }}</h2>
           <div class="card__meta">
-            <span>{{ s.visitsThisWeek }} هذا الأسبوع</span>
+            <span>{{ s.visitsThisWeek }} {{ 'admin.dashboard.thisWeek' | transloco }}</span>
             <span>·</span>
-            <span>{{ s.uniqueVisitorsToday }} زائر فريد اليوم</span>
+            <span>{{ s.uniqueVisitorsToday }} {{ 'admin.dashboard.uniqueToday' | transloco }}</span>
           </div>
         </header>
 
         <div class="chart">
           @for (day of s.visitsLast7Days; track day.date) {
             <div class="chart__bar-wrap">
-              <div class="chart__bar" [style.height.%]="barHeight(day.count)" [title]="day.count + ' زيارة'">
+              <div class="chart__bar" [style.height.%]="barHeight(day.count)" [title]="day.count">
                 <span class="chart__count">{{ day.count }}</span>
               </div>
               <div class="chart__label">{{ day.date | date:'EEE' }}</div>
@@ -79,15 +78,14 @@
         </div>
       </section>
 
-      <!-- Recent Messages -->
       <section class="card">
         <header class="card__header">
-          <h2>آخر الرسائل</h2>
-          <a routerLink="/admin/messages" class="card__link">عرض الكل</a>
+          <h2>{{ 'admin.dashboard.recentMessages' | transloco }}</h2>
+          <a routerLink="/admin/messages" class="card__link">{{ 'admin.dashboard.viewAll' | transloco }}</a>
         </header>
 
         @if (s.recentMessages.length === 0) {
-          <div class="empty-small">لا توجد رسائل</div>
+          <div class="empty-small">{{ 'admin.dashboard.noMessages' | transloco }}</div>
         } @else {
           <ul class="recent-list">
             @for (m of s.recentMessages; track m.id) {

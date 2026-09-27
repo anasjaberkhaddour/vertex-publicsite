@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, effect } from '@angular/core';
 import { Header } from '../../../layout/header/header';
 import { Hero } from '../../../sections/hero/hero';
 import { Modules } from '../../../sections/modules/modules';
@@ -10,6 +10,8 @@ import { Cta } from '../../../sections/cta/cta';
 import { Contact } from '../../../sections/contact/contact';
 import { Footer } from '../../../layout/footer/footer';
 import { VisitService } from '../../../core/services/visit';
+import { ContentService } from '../../../core/services/content';
+import { LangService } from '../../../core/services/lang';
 
 @Component({
   selector: 'app-landing',
@@ -29,6 +31,16 @@ import { VisitService } from '../../../core/services/visit';
 })
 export class Landing implements OnInit {
   private visitService = inject(VisitService);
+  private contentService = inject(ContentService);
+  private langService = inject(LangService);
+
+  constructor() {
+    // راقب تغيّر لغة الموقع → أعد تحميل المحتوى
+    effect(() => {
+      const lang = this.langService.currentPublic();
+      this.contentService.loadAll(lang).subscribe();
+    });
+  }
 
   ngOnInit() {
     this.visitService.trackVisit();

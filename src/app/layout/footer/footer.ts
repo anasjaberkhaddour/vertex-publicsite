@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
-import { LucideDynamicIcon, LucideMail, LucidePhone, LucideMapPin } from '@lucide/angular';
+import { LucideDynamicIcon } from '@lucide/angular';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { getSocialSvg as getSocialSvgRaw, getIcon } from '../../core/utils/icon-map';
+import { ContentService } from '../../core/services/content';
 
 @Component({
   selector: 'app-footer',
@@ -9,11 +12,23 @@ import { LucideDynamicIcon, LucideMail, LucidePhone, LucideMapPin } from '@lucid
   styleUrl: './footer.scss'
 })
 export class Footer {
+  private sanitizer = inject(DomSanitizer);
+  private contentService = inject(ContentService);
+
   year = new Date().getFullYear();
 
-  mailIcon = LucideMail;
-  phoneIcon = LucidePhone;
-  pinIcon = LucideMapPin;
+  brandSection = computed(() => this.contentService.getSection('footer-brand'));
+  socialBlocks = computed(() => this.brandSection()?.blocks ?? []);
+
+  contactBlocks = computed(() =>
+    (this.contentService.getSection('contact')?.blocks ?? [])
+      .filter(b => b.isFeatured)
+  );
+
+  moduleBlocks = computed(() =>
+    (this.contentService.getSection('modules')?.blocks ?? [])
+      .filter(b => b.isFeatured)
+  );
 
   quickLinks = [
     { key: 'home',    href: '#home' },
@@ -23,5 +38,10 @@ export class Footer {
     { key: 'contact', href: '#contact' }
   ];
 
-  moduleLinks = ['hr', 'payroll', 'finance', 'inventory', 'production'];
+  getIcon = getIcon;
+
+  getSocialSvg(name: string): SafeHtml | null {
+    const raw = getSocialSvgRaw(name);
+    return raw ? this.sanitizer.bypassSecurityTrustHtml(raw) : null;
+  }
 }

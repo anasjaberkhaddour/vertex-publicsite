@@ -1,9 +1,8 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, inject, computed, signal, effect } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
 import { LucideDynamicIcon, LucidePlus } from '@lucide/angular';
 import { Reveal } from '../../directives/reveal';
-
-type TabKey = 'general' | 'technical';
+import { ContentService } from '../../core/services/content';
 
 @Component({
   selector: 'app-faq',
@@ -12,23 +11,41 @@ type TabKey = 'general' | 'technical';
   styleUrl: './faq.scss'
 })
 export class Faq {
-  activeTab = signal<TabKey>('general');
+  private contentService = inject(ContentService);
+
+  section = computed(() => this.contentService.getSection('faq'));
+
+  tabs = computed(() => {
+    const blocks = this.section()?.blocks ?? [];
+    const types = [...new Set(blocks.map(b => b.type).filter(Boolean))] as string[];
+    return types.map(t => ({
+      key: t,
+      label: t === 'general' ? 'faq.tabs.general' : 'faq.tabs.technical'
+    }));
+  });
+
+  activeTab = signal<string>('');
   openIndex = signal<number>(0);
   plusIcon = LucidePlus;
 
-  tabs: { key: TabKey; label: string }[] = [
-    { key: 'general', label: 'faq.tabs.general' },
-    { key: 'technical', label: 'faq.tabs.technical' }
-  ];
+  items = computed(() => {
+    const blocks = this.section()?.blocks ?? [];
+    const tab = this.activeTab();
+    if (!tab) return [];
+    return blocks.filter(b => b.type === tab);
+  });
 
-  private itemsByTab: Record<TabKey, { key: string }[]> = {
-    general:   [{ key: 'q1' }, { key: 'q2' }, { key: 'q3' }],
-    technical: [{ key: 'q4' }, { key: 'q5' }, { key: 'q6' }]
-  };
+  constructor() {
+    // عندما تُحمَّل التبويبات لأول مرة، فعّل الأولى
+    effect(() => {
+      const tabs = this.tabs();
+      if (tabs.length > 0 && !this.activeTab()) {
+        this.activeTab.set(tabs[0].key);
+      }
+    });
+  }
 
-  items = computed(() => this.itemsByTab[this.activeTab()]);
-
-  switchTab(tab: TabKey) {
+  switchTab(tab: string) {
     if (this.activeTab() === tab) return;
     this.activeTab.set(tab);
     this.openIndex.set(0);
