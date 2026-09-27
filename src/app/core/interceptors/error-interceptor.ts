@@ -1,14 +1,10 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { ToastService } from '../services/toast';
-import { AuthService } from '../services/auth';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const toast = inject(ToastService);
-  const auth = inject(AuthService);
-  const router = inject(Router);
 
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
@@ -37,13 +33,15 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             break;
           case 401:
             message = 'انتهت الجلسة. الرجاء تسجيل الدخول مجدداً.';
-            auth.logout();
             break;
           case 403:
             message = 'ليس لديك صلاحية للقيام بهذا الإجراء.';
             break;
           case 404:
             message = 'العنصر المطلوب غير موجود.';
+            break;
+          case 429:
+            message = 'عدد المحاولات كبير. حاول بعد قليل.';
             break;
           case 500:
           case 502:
@@ -53,7 +51,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         }
       }
 
-      // تجاهل إشعار 401 لأنه يعالج بـ logout
+      // تجاهل إشعار 401 لأنه يُعالج بـ refresh
       if (err.status !== 401) {
         toast.error(message);
       }

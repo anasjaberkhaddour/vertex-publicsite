@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { LoginRequest, LoginResponse, UserInfo } from '../models/auth.models';
+import { LoginRequest, LoginResponse, UserInfo, RefreshTokenRequest, RefreshTokenResponse } from '../models/auth.models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -13,6 +13,7 @@ export class AuthService {
   private apiUrl = `${environment.apiUrl}/auth`;
 
   private readonly TOKEN_KEY = 'vertex_token';
+  private readonly REFRESH_KEY = 'vertex_refresh_token';
   private readonly USER_KEY = 'vertex_user';
 
   currentUser = signal<UserInfo | null>(this.loadUser());
@@ -23,6 +24,7 @@ export class AuthService {
       .pipe(
         tap(res => {
           localStorage.setItem(this.TOKEN_KEY, res.token);
+          localStorage.setItem(this.REFRESH_KEY, res.refreshToken);
           localStorage.setItem(this.USER_KEY, JSON.stringify(res.user));
           this.currentUser.set(res.user);
         })
@@ -30,7 +32,18 @@ export class AuthService {
   }
 
   logout() {
+    const refreshToken = this.getRefreshToken();
+
+    if (refreshToken) {
+      // إبلاغ السيرفر لإلغاء الـ Refresh Token (Best effort)
+      this.http.post(`${this.apiUrl}/logout`, { refreshToken }).subscribe({
+        next: () => {},
+        error: () => {}
+      });
+    }
+
     localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.REFRESH_KEY);
     localStorage.removeItem(this.USER_KEY);
     this.currentUser.set(null);
     this.router.navigate(['/admin/login']);
@@ -38,6 +51,26 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  getRefreshToken(): string | null {
+    return localStorage.getItem(this.REFRESH_KEY);
+  }
+
+  setToken(token: string) {
+    localStorage.setItem(this.TOKEN_KEY, token);
+  }
+
+  refresh(): Observable<RefreshTokenResponse> {
+    const refreshToken = this.getRefreshToken();
+    const req: RefreshTokenRequest = { refreshToken: refreshToken ?? '' };
+
+    return this.http.post<RefreshTokenResponse>(`${this.apiUrl}/refresh`, req)
+      .pipe(
+        tap(res => {
+          localStorage.setItem(this.TOKEN_KEY, res.token);
+        })
+      );
   }
 
   hasPermission(permission: string): boolean {
