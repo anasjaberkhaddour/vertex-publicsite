@@ -266,6 +266,7 @@
           "name": "Name",
           "email": "Email",
           "company": "Company",
+          "phone": "Phone",
           "message": "Message",
           "date": "Date",
           "noCompany": "—",
